@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Film Cleaner — Technical Architecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;800&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --panel: #111827;
+    --border: #1e2d40;
+    --accent: #00d4ff;
+    --accent2: #f59e0b;
+    --accent3: #10b981;
+    --accent4: #8b5cf6;
+    --accent5: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --glow: rgba(0,212,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, rgba(0,212,255,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.05) 0%, transparent 50%),
+      linear-gradient(rgba(30,45,64,0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,45,64,0.3) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  }
+
+  .page-title {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .page-title h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 30px rgba(0,212,255,0.4);
+  }
+
+  .page-title p {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .arch-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* ROW LAYOUTS */
+  .row {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  /* SUBSYSTEM BLOCKS */
+  .subsystem {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    flex: 1;
+    min-width: 180px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .subsystem:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .subsystem.power { border-color: var(--accent2); box-shadow: 0 0 20px rgba(245,158,11,0.08); }
+  .subsystem.control { border-color: var(--accent); box-shadow: 0 0 20px rgba(0,212,255,0.08); }
+  .subsystem.sensor { border-color: var(--accent4); box-shadow: 0 0 20px rgba(139,92,246,0.08); }
+  .subsystem.drive { border-color: var(--accent3); box-shadow: 0 0 20px rgba(16,185,129,0.08); }
+  .subsystem.film { border-color: #38bdf8; box-shadow: 0 0 20px rgba(56,189,248,0.08); }
+  .subsystem.cleaning { border-color: var(--accent5); box-shadow: 0 0 20px rgba(239,68,68,0.08); }
+
+  .subsystem-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .power .subsystem-label { color: var(--accent2); border-color: rgba(245,158,11,0.3); }
+  .control .subsystem-label { color: var(--accent); border-color: rgba(0,212,255,0.3); }
+  .sensor .subsystem-label { color: var(--accent4); border-color: rgba(139,92,246,0.3); }
+  .drive .subsystem-label { color: var(--accent3); border-color: rgba(16,185,129,0.3); }
+  .film .subsystem-label { color: #38bdf8; border-color: rgba(56,189,248,0.3); }
+  .cleaning .subsystem-label { color: var(--accent5); border-color: rgba(239,68,68,0.3); }
+
+  .component {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    border: 1px solid transparent;
+    font-size: 11px;
+  }
+
+  .component:last-child { margin-bottom: 0; }
+
+  .comp-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+  }
+
+  .comp-info { flex: 1; }
+  .comp-name { font-weight: 600; font-size: 11px; color: var(--text); }
+  .comp-detail { font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+  /* ARROWS */
+  .arrow-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding: 4px 0;
+  }
+
+  .arrow-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .arrow-label {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .arrow-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 11px;
+  }
+
+  .arrow-power { color: var(--accent2); }
+  .arrow-signal { color: var(--accent); }
+  .arrow-mech { color: var(--accent3); }
+  .arrow-data { color: var(--accent4); }
+
+  .connector {
+    width: 2px;
+    background: var(--border);
+    height: 20px;
+    margin: 0 auto;
+  }
+
+  /* FLOW SECTION */
+  .flow-section {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+
+  .flow-title {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 110px;
+    flex-shrink: 0;
+  }
+
+  .step-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    border: 2px solid var(--border);
+    background: rgba(255,255,255,0.03);
+  }
+
+  .step-icon-wrap.s1 { border-color: var(--accent4); background: rgba(139,92,246,0.1); }
+  .step-icon-wrap.s2 { border-color: var(--accent); background: rgba(0,212,255,0.1); }
+  .step-icon-wrap.s3 { border-color: var(--accent3); background: rgba(16,185,129,0.1); }
+  .step-icon-wrap.s4 { border-color: #38bdf8; background: rgba(56,189,248,0.1); }
+  .step-icon-wrap.s5 { border-color: var(--accent5); background: rgba(239,68,68,0.1); }
+  .step-icon-wrap.s6 { border-color: var(--accent3); background: rgba(16,185,129,0.1); }
+
+  .step-name { font-size: 10px; font-weight: 600; text-align: center; color: var(--text); }
+  .step-desc { font-size: 9px; color: var(--muted); text-align: center; line-height: 1.4; }
+
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--border);
+    flex-shrink: 0;
+    padding: 0 4px;
+    margin-bottom: 24px;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 14px 20px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .badge {
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    background: var(--bg);
+    padding: 2px 8px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border-radius: 4px;
+  }
+
+  .power .badge { color: var(--accent2); border: 1px solid rgba(245,158,11,0.4); }
+  .control .badge { color: var(--accent); border: 1px solid rgba(0,212,255,0.4); }
+  .sensor .badge { color: var(--accent4); border: 1px solid rgba(139,92,246,0.4); }
+  .drive .badge { color: var(--accent3); border: 1px solid rgba(16,185,129,0.4); }
+  .film .badge { color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); }
+  .cleaning .badge { color: var(--accent5); border: 1px solid rgba(239,68,68,0.4); }
+
+  .center-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .v-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: var(--accent);
+    font-size: 14px;
+  }
+
+  .v-arrow-label {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    padding: 4px 0;
+  }
+
+  .arrows-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 8px 0;
+  }
+
+  .arrow-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+  }
+
+  .arrow-item span { font-size: 9px; color: var(--muted); letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>Solar Panel Film Cleaner — System Architecture</h1>
+  <p>Technical Reference · Subsystem Overview · Signal & Power Flow</p>
+</div>
+
+<div class="arch-container">
+
+  <!-- ROW 1: Power + Sensor + Control -->
+  <div class="row">
+    <div class="subsystem power" style="max-width:240px;">
+      <span class="badge">SYS-01</span>
+      <div class="subsystem-label">⚡ Power Subsystem</div>
+      <div class="component">
+        <div class="comp-icon">☀️</div>
+        <div class="comp-info">
+          <div class="comp-name">Solar Panel Input</div>
+          <div class="comp-detail">Primary energy source</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🔋</div>
+        <div class="comp-info">
+          <div class="comp-name">Battery Pack</div>
+          <div class="comp-detail">Backup / energy storage</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🔌</div>
+        <div class="comp-info">
+          <div class="comp-name">Voltage Regulator</div>
+          <div class="comp-detail">Stable 5V / 12V output</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsystem sensor" style="max-width:240px;">
+      <span class="badge">SYS-02</span>
+      <div class="subsystem-label">🔬 Sensor Subsystem</div>
+      <div class="component">
+        <div class="comp-icon">💨</div>
+        <div class="comp-info">
+          <div class="comp-name">Dust Sensor</div>
+          <div class="comp-detail">Mounted on film surface</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">📡</div>
+        <div class="comp-info">
+          <div class="comp-name">Threshold Comparator</div>
+          <div class="comp-detail">Triggers at dust level limit</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🔁</div>
+        <div class="comp-info">
+          <div class="comp-name">Post-Cycle Check</div>
+          <div class="comp-detail">Confirms dust cleared</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsystem control" style="max-width:280px;">
+      <span class="badge">SYS-03</span>
+      <div class="subsystem-label">🧠 Control Subsystem</div>
+      <div class="component">
+        <div class="comp-icon">💻</div>
+        <div class="comp-info">
+          <div class="comp-name">Microcontroller (MCU)</div>
+          <div class="comp-detail">Central logic unit (e.g. Arduino)</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">⚙️</div>
+        <div class="comp-info">
+          <div class="comp-name">Motor Driver</div>
+          <div class="comp-detail">PWM speed control signals</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🛑</div>
+        <div class="comp-info">
+          <div class="comp-name">Limit Switch Logic</div>
+          <div class="comp-detail">Detects film end positions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARROWS DOWN -->
+  <div class="arrows-container">
+    <div class="arrow-item arrow-power">
+      ⚡ ↓
+      <span>DC Power</span>
+    </div>
+    <div class="arrow-item arrow-data">
+      📊 →
+      <span>Dust Data</span>
+    </div>
+    <div class="arrow-item arrow-signal">
+      🔀 ↓
+      <span>Drive Signal</span>
+    </div>
+  </div>
+
+  <!-- ROW 2: Drive + Film -->
+  <div class="row">
+    <div class="subsystem drive">
+      <span class="badge">SYS-04</span>
+      <div class="subsystem-label">⚙️ Drive Subsystem</div>
+      <div class="component">
+        <div class="comp-icon">🔧</div>
+        <div class="comp-info">
+          <div class="comp-name">DC Motor</div>
+          <div class="comp-detail">Low-speed, high-torque drive</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🎡</div>
+        <div class="comp-info">
+          <div class="comp-name">Drive Roller</div>
+          <div class="comp-detail">Motor-coupled film advance</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">⭕</div>
+        <div class="comp-info">
+          <div class="comp-name">Idler Roller</div>
+          <div class="comp-detail">Tension & alignment control</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsystem film">
+      <span class="badge">SYS-05</span>
+      <div class="subsystem-label">📽️ Film Subsystem</div>
+      <div class="component">
+        <div class="comp-icon">🪟</div>
+        <div class="comp-info">
+          <div class="comp-name">Transparent Film Loop</div>
+          <div class="comp-detail">High-transmittance plastic</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">⬆️</div>
+        <div class="comp-info">
+          <div class="comp-name">Top Path (Active)</div>
+          <div class="comp-detail">Sits on panel, collects dust</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">⬇️</div>
+        <div class="comp-info">
+          <div class="comp-name">Return Path (Underside)</div>
+          <div class="comp-detail">Film travels under panel via slit</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsystem cleaning">
+      <span class="badge">SYS-06</span>
+      <div class="subsystem-label">🧹 Cleaning Subsystem</div>
+      <div class="component">
+        <div class="comp-icon">🪛</div>
+        <div class="comp-info">
+          <div class="comp-name">Bottom Support Bracket</div>
+          <div class="comp-detail">Protrudes from panel underside</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🪥</div>
+        <div class="comp-info">
+          <div class="comp-name">Brush Array</div>
+          <div class="comp-detail">Scrubs dust off return film</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🌀</div>
+        <div class="comp-info">
+          <div class="comp-name">Gravity-Assist Shedding</div>
+          <div class="comp-detail">Loose particles fall at roller bend</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPERATION FLOW -->
+  <div class="flow-section">
+    <div class="flow-title">◆ Operational Sequence Flow</div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-icon-wrap s1">💨</div>
+        <div class="step-name">Dust Detected</div>
+        <div class="step-desc">Sensor reads above threshold on film surface</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon-wrap s2">🧠</div>
+        <div class="step-name">MCU Triggers</div>
+        <div class="step-desc">Controller sends drive signal to motor driver</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon-wrap s3">⚙️</div>
+        <div class="step-name">Film Advances</div>
+        <div class="step-desc">DC motor turns roller, film moves across panel top</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon-wrap s4">⬇️</div>
+        <div class="step-name">Film Returns</div>
+        <div class="step-desc">Dusty film loops under panel through slit</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon-wrap s5">🪥</div>
+        <div class="step-name">Brushes Clean</div>
+        <div class="step-desc">Support bracket brushes scrub film underside</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon-wrap s6">☀️</div>
+        <div class="step-name">Light Restored</div>
+        <div class="step-desc">Clean film re-enters top — full transmission</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div style="font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-right:8px;">Legend:</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div> Power Flow</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div> Sensor Data</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Control Signals</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div> Mechanical Drive</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div> Cleaning Action</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#38bdf8"></div> Film Path</div>
+  </div>
+
+</div>
+</body>
+</html>
