@@ -12,12 +12,12 @@
     --surface: #161b22;
     --surface2: #1c2330;
     --border: #30363d;
-    --power:  #f0a500;
-    --input:  #3b82f6;
-    --control:#a855f7;
-    --drive:  #10b981;
-    --mech:   #0ea5e9;
-    --film:   #f43f5e;
+    --power:   #f0a500;
+    --input:   #3b82f6;
+    --control: #a855f7;
+    --drive:   #10b981;
+    --mech:    #0ea5e9;
+    --film:    #f43f5e;
     --text: #e6edf3;
     --muted: #7d8590;
     --mono: 'IBM Plex Mono', monospace;
@@ -37,49 +37,57 @@
       radial-gradient(ellipse at 85% 100%, rgba(16,185,129,0.06) 0%, transparent 45%);
   }
 
-  header {
-    text-align: center;
-    margin-bottom: 52px;
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 40px;
   }
+  .tab {
+    padding: 10px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .tab.active {
+    background: var(--surface2);
+    border-color: var(--drive);
+    color: var(--drive);
+  }
+  .tab:hover:not(.active) { border-color: var(--muted); color: var(--text); }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── HEADER ── */
+  header { text-align: center; margin-bottom: 48px; }
   .proto-tag {
     display: inline-block;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 4px 14px;
-    border-radius: 20px;
-    margin-bottom: 14px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted);
+    border: 1px solid var(--border); padding: 4px 14px; border-radius: 20px; margin-bottom: 14px;
   }
   header h1 { font-size: 28px; font-weight: 900; letter-spacing: -0.5px; }
   header h1 span { color: var(--drive); }
   header p { margin-top: 8px; font-size: 13px; color: var(--muted); font-weight: 600; }
 
-  .chart {
-    max-width: 1040px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  /* ── FLOWCHART ── */
+  .chart { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
 
-  /* ── SUBSYSTEM CARD ── */
   .subsystem {
-    width: 100%;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    position: relative;
+    width: 100%; background: var(--surface);
+    border: 1.5px solid var(--border); border-radius: 16px;
+    overflow: hidden; position: relative;
   }
   .subsystem::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 4px;
-    border-radius: 4px 0 0 4px;
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; border-radius: 4px 0 0 4px;
   }
   .ss-power::before   { background: var(--power); }
   .ss-input::before   { background: var(--input); }
@@ -89,72 +97,49 @@
   .ss-film::before    { background: var(--film); }
 
   .ss-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: flex; align-items: center; gap: 12px;
     padding: 14px 20px 14px 24px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface2);
+    border-bottom: 1px solid var(--border); background: var(--surface2);
   }
   .ss-icon {
-    width: 42px; height: 42px;
-    border-radius: 10px;
+    width: 42px; height: 42px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 20px; flex-shrink: 0;
   }
-  .ss-power  .ss-icon  { background: rgba(240,165,0,0.12); }
-  .ss-input  .ss-icon  { background: rgba(59,130,246,0.12); }
+  .ss-power .ss-icon   { background: rgba(240,165,0,0.12); }
+  .ss-input .ss-icon   { background: rgba(59,130,246,0.12); }
   .ss-control .ss-icon { background: rgba(168,85,247,0.12); }
-  .ss-drive  .ss-icon  { background: rgba(16,185,129,0.12); }
-  .ss-mech   .ss-icon  { background: rgba(14,165,233,0.12); }
-  .ss-film   .ss-icon  { background: rgba(244,63,94,0.12); }
+  .ss-drive .ss-icon   { background: rgba(16,185,129,0.12); }
+  .ss-mech .ss-icon    { background: rgba(14,165,233,0.12); }
+  .ss-film .ss-icon    { background: rgba(244,63,94,0.12); }
 
   .ss-meta { flex: 1; }
-  .ss-id {
-    font-family: var(--mono);
-    font-size: 9px; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
-  }
+  .ss-id { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
   .ss-name { font-size: 15px; font-weight: 800; }
-  .ss-power  .ss-name  { color: var(--power); }
-  .ss-input  .ss-name  { color: var(--input); }
+  .ss-power .ss-name   { color: var(--power); }
+  .ss-input .ss-name   { color: var(--input); }
   .ss-control .ss-name { color: var(--control); }
-  .ss-drive  .ss-name  { color: var(--drive); }
-  .ss-mech   .ss-name  { color: var(--mech); }
-  .ss-film   .ss-name  { color: var(--film); }
+  .ss-drive .ss-name   { color: var(--drive); }
+  .ss-mech .ss-name    { color: var(--mech); }
+  .ss-film .ss-name    { color: var(--film); }
 
-  .ss-badge {
-    font-family: var(--mono); font-size: 10px;
-    padding: 4px 10px; border-radius: 6px; font-weight: 700;
-  }
-  .ss-power  .ss-badge { background: rgba(240,165,0,0.1);  color: var(--power); }
-  .ss-input  .ss-badge { background: rgba(59,130,246,0.1); color: var(--input); }
-  .ss-control .ss-badge{ background: rgba(168,85,247,0.1); color: var(--control); }
-  .ss-drive  .ss-badge { background: rgba(16,185,129,0.1); color: var(--drive); }
-  .ss-mech   .ss-badge { background: rgba(14,165,233,0.1); color: var(--mech); }
-  .ss-film   .ss-badge { background: rgba(244,63,94,0.1);  color: var(--film); }
+  .ss-badge { font-family: var(--mono); font-size: 10px; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+  .ss-power .ss-badge   { background: rgba(240,165,0,0.1);  color: var(--power); }
+  .ss-input .ss-badge   { background: rgba(59,130,246,0.1); color: var(--input); }
+  .ss-control .ss-badge { background: rgba(168,85,247,0.1); color: var(--control); }
+  .ss-drive .ss-badge   { background: rgba(16,185,129,0.1); color: var(--drive); }
+  .ss-mech .ss-badge    { background: rgba(14,165,233,0.1); color: var(--mech); }
+  .ss-film .ss-badge    { background: rgba(244,63,94,0.1);  color: var(--film); }
 
-  .ss-body {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px;
-    background: var(--border);
-  }
-  .comp {
-    background: var(--surface);
-    padding: 14px 18px;
-    display: flex; align-items: flex-start; gap: 12px;
-  }
+  .ss-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--border); }
+  .comp { background: var(--surface); padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px; }
   .comp-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
   .comp-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .comp-part { font-family: var(--mono); font-size: 10px; color: var(--drive); margin-bottom: 2px; font-weight: 700; }
   .comp-detail { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.5; }
 
-  /* ── ARROWS ── */
-  .arrow-block {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 0;
-    padding: 6px 0; width: 100%;
-  }
+  /* arrows */
+  .arrow-block { display: flex; flex-direction: column; align-items: center; padding: 6px 0; width: 100%; }
   .arrow-pipe { width: 2px; height: 14px; background: var(--border); }
   .arrow-label-row { display: flex; align-items: center; gap: 10px; }
   .arrow-pill {
@@ -163,131 +148,163 @@
     border-radius: 20px; padding: 5px 14px;
     font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
   }
-  .arrow-pill.power  { border-color: rgba(240,165,0,0.4);  color: var(--power); }
-  .arrow-pill.signal { border-color: rgba(168,85,247,0.4); color: var(--control); }
-  .arrow-pill.mech   { border-color: rgba(16,185,129,0.4); color: var(--drive); }
-  .arrow-pill.phys   { border-color: rgba(14,165,233,0.4); color: var(--mech); }
-  .arrow-pill.input  { border-color: rgba(59,130,246,0.4); color: var(--input); }
-
+  .arrow-pill.power   { border-color: rgba(240,165,0,0.4);  color: var(--power); }
+  .arrow-pill.signal  { border-color: rgba(168,85,247,0.4); color: var(--control); }
+  .arrow-pill.mech    { border-color: rgba(16,185,129,0.4); color: var(--drive); }
+  .arrow-pill.phys    { border-color: rgba(14,165,233,0.4); color: var(--mech); }
+  .arrow-pill.input-s { border-color: rgba(59,130,246,0.4); color: var(--input); }
   .arrow-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .power  .arrow-dot { background: var(--power); }
-  .signal .arrow-dot { background: var(--control); }
-  .mech   .arrow-dot { background: var(--drive); }
-  .phys   .arrow-dot { background: var(--mech); }
-  .input  .arrow-dot { background: var(--input); }
+  .power  .arrow-dot  { background: var(--power); }
+  .signal .arrow-dot  { background: var(--control); }
+  .mech   .arrow-dot  { background: var(--drive); }
+  .phys   .arrow-dot  { background: var(--mech); }
+  .input-s .arrow-dot { background: var(--input); }
 
-  .multi-arrow {
-    display: flex; justify-content: center;
-    gap: 24px; width: 100%; padding: 16px 0 8px;
-  }
+  .multi-arrow { display: flex; justify-content: center; gap: 24px; width: 100%; padding: 16px 0 8px; }
   .single-arrow { display: flex; flex-direction: column; align-items: center; gap: 0; }
 
-  /* ── DECISION ── */
-  .decision-wrap {
-    display: flex; flex-direction: column;
-    align-items: center; width: 100%; padding: 8px 0;
-  }
+  /* decision */
+  .decision-wrap { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 8px 0; }
   .diamond {
-    width: 200px; height: 60px;
-    background: var(--surface2);
-    border: 2px solid var(--input);
-    transform: skewX(-20deg);
+    width: 200px; height: 60px; background: var(--surface2);
+    border: 2px solid var(--input); transform: skewX(-20deg);
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 20px rgba(59,130,246,0.15);
-    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(59,130,246,0.15); border-radius: 4px;
   }
-  .diamond-text {
-    transform: skewX(20deg);
-    font-size: 13px; font-weight: 800;
-    color: var(--input); text-align: center; line-height: 1.3;
-  }
-  .diamond-yes {
-    font-family: var(--mono); font-size: 9px;
-    color: var(--drive); font-weight: 700;
-    letter-spacing: 1px; margin-top: 6px;
-  }
+  .diamond-text { transform: skewX(20deg); font-size: 13px; font-weight: 800; color: var(--input); text-align: center; line-height: 1.3; }
+  .diamond-yes { font-family: var(--mono); font-size: 9px; color: var(--drive); font-weight: 700; letter-spacing: 1px; margin-top: 6px; }
 
-  /* ── FILM LOOP ── */
+  /* film loop */
   .film-loop-section {
-    width: 100%;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
+    width: 100%; background: var(--surface);
+    border: 1.5px solid var(--border); border-radius: 16px; padding: 24px; position: relative;
   }
   .film-loop-section::before {
-    content: '';
-    position: absolute; left: 0; top: 0; bottom: 0;
-    width: 4px; border-radius: 4px 0 0 4px;
-    background: var(--film);
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; border-radius: 4px 0 0 4px; background: var(--film);
   }
-  .film-header {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 20px; padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-  }
+  .film-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
   .film-title { font-size: 15px; font-weight: 800; color: var(--film); }
   .film-id { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--muted); }
-
-  .loop-box {
-    flex: 1; padding: 12px 16px;
-    border-radius: 10px; text-align: center;
-    font-size: 11px; font-weight: 700;
-  }
-  .loop-box.top-film {
-    background: rgba(244,63,94,0.08);
-    border: 1.5px dashed rgba(244,63,94,0.5); color: var(--film);
-  }
-  .loop-box.bot-film {
-    background: rgba(14,165,233,0.08);
-    border: 1.5px dashed rgba(14,165,233,0.5); color: var(--mech);
-  }
+  .loop-box { flex: 1; padding: 12px 16px; border-radius: 10px; text-align: center; font-size: 11px; font-weight: 700; }
+  .loop-box.top-film { background: rgba(244,63,94,0.08); border: 1.5px dashed rgba(244,63,94,0.5); color: var(--film); }
+  .loop-box.bot-film { background: rgba(14,165,233,0.08); border: 1.5px dashed rgba(14,165,233,0.5); color: var(--mech); }
   .roller-circle {
     width: 48px; height: 48px; border-radius: 50%;
     border: 2px solid var(--drive); background: rgba(16,185,129,0.1);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
   }
-  .panel-block {
-    background: rgba(16,185,129,0.05);
-    border: 2px solid rgba(16,185,129,0.3);
-    border-radius: 8px; padding: 16px 28px; text-align: center;
-  }
+  .panel-block { background: rgba(16,185,129,0.05); border: 2px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 16px 28px; text-align: center; }
   .panel-block .icon { font-size: 28px; }
   .panel-block .label { font-size: 11px; font-weight: 700; color: var(--drive); margin-top: 4px; }
   .panel-block .sub { font-family: var(--mono); font-size: 9px; color: var(--muted); }
 
-  /* ── LEGEND ── */
+  /* legend */
   .legend {
-    display: flex; align-items: center;
-    gap: 20px; flex-wrap: wrap; justify-content: center;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center;
     margin-top: 40px; padding: 14px 24px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; font-family: var(--mono); font-size: 10px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    font-family: var(--mono); font-size: 10px;
   }
   .legend-title { color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-right: 8px; }
   .leg-item { display: flex; align-items: center; gap: 7px; font-weight: 700; }
   .leg-line { width: 28px; height: 2px; border-radius: 2px; }
   .leg-dash { width: 28px; height: 0; border-top: 2px dashed; opacity: 0.7; }
 
-  @keyframes fadeUp {
-    from { opacity:0; transform: translateY(16px); }
-    to   { opacity:1; transform: translateY(0); }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+  .subsystem, .arrow-block, .decision-wrap, .film-loop-section { animation: fadeUp 0.4s ease both; }
+
+  /* ── OVERVIEW TAB ── */
+  .overview { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+
+  .ov-header { text-align: center; margin-bottom: 12px; }
+  .ov-header h2 { font-size: 22px; font-weight: 900; color: var(--text); }
+  .ov-header p { font-size: 13px; color: var(--muted); margin-top: 6px; font-weight: 600; }
+
+  .ov-card {
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 16px; overflow: hidden;
   }
-  .subsystem, .arrow-block, .decision-wrap, .film-loop-section {
-    animation: fadeUp 0.4s ease both;
+  .ov-card-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px; background: var(--surface2); border-bottom: 1px solid var(--border);
   }
+  .ov-num {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .ov-card.c-power  .ov-num { background: rgba(240,165,0,0.15);  color: var(--power); }
+  .ov-card.c-input  .ov-num { background: rgba(59,130,246,0.15); color: var(--input); }
+  .ov-card.c-ctrl   .ov-num { background: rgba(168,85,247,0.15); color: var(--control); }
+  .ov-card.c-drive  .ov-num { background: rgba(16,185,129,0.15); color: var(--drive); }
+  .ov-card.c-mech   .ov-num { background: rgba(14,165,233,0.15); color: var(--mech); }
+  .ov-card.c-film   .ov-num { background: rgba(244,63,94,0.15);  color: var(--film); }
+
+  .ov-card-title { font-size: 15px; font-weight: 800; }
+  .ov-card.c-power  .ov-card-title { color: var(--power); }
+  .ov-card.c-input  .ov-card-title { color: var(--input); }
+  .ov-card.c-ctrl   .ov-card-title { color: var(--control); }
+  .ov-card.c-drive  .ov-card-title { color: var(--drive); }
+  .ov-card.c-mech   .ov-card-title { color: var(--mech); }
+  .ov-card.c-film   .ov-card-title { color: var(--film); }
+
+  .ov-card-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  .ov-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 16px; }
+
+  .ov-parts {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .ov-part {
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    padding: 4px 12px; border-radius: 6px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text);
+  }
+  .ov-part span { opacity: 0.5; margin-right: 4px; }
+
+  .ov-section-label {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+  }
+
+  .ov-decision {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
+  }
+
+  .ov-decision p {
+    font-size: 13px; color: var(--text); line-height: 1.7; font-weight: 500;
+  }
+
+  .ov-decision strong { font-weight: 700; }
+
+  .ov-why {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .ov-why-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .ov-why p { font-size: 12px; color: var(--muted); line-height: 1.7; font-weight: 500; }
+  .ov-why p strong { color: var(--text); font-weight: 700; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="proto-tag">Phase 3 Prototype · System Architecture</div>
-  <h1>Conveyor <span>Film System</span> — Architecture Flowchart</h1>
-  <p>Subsystem breakdown · Component detail · Signal & mechanical data flow</p>
+  <h1>Conveyor <span>Film System</span></h1>
+  <p>Real parts · Design decisions · Signal & mechanical data flow</p>
 </header>
 
+<!-- TABS -->
+<div class="tab-bar">
+  <div class="tab active" onclick="switchTab('flowchart', this)">⚙️ &nbsp; Architecture Flowchart</div>
+  <div class="tab" onclick="switchTab('overview', this)">📋 &nbsp; Subsystem Overview</div>
+</div>
+
+<!-- ══════════════ FLOWCHART VIEW ══════════════ -->
+<div id="flowchart" class="view active">
 <div class="chart">
 
   <!-- SS-01: POWER -->
@@ -302,53 +319,55 @@
     </div>
     <div class="ss-body">
       <div class="comp">
-        <div class="comp-icon">🔋</div>
-        <div>
-          <div class="comp-name">Battery Pack</div>
-          <div class="comp-detail">Primary DC energy source<br/>e.g. 9V / 12V</div>
-        </div>
-      </div>
-      <div class="comp">
         <div class="comp-icon">🔌</div>
         <div>
-          <div class="comp-name">Power Rails</div>
-          <div class="comp-detail">5V → logic / MCU rail<br/>12V → motor rail</div>
+          <div class="comp-name">AC-DC Supply</div>
+          <div class="comp-part">AC-DC 12V 5A</div>
+          <div class="comp-detail">Primary power source<br/>Drives motor + logic</div>
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">🛡️</div>
+        <div class="comp-icon">🔽</div>
         <div>
-          <div class="comp-name">Fuse / Protection</div>
-          <div class="comp-detail">Overcurrent protection<br/>for both rails</div>
+          <div class="comp-name">Buck Converter</div>
+          <div class="comp-part">20W Adjustable DC-DC</div>
+          <div class="comp-detail">Steps 12V → 5V<br/>Powers Arduino logic rail</div>
+        </div>
+      </div>
+      <div class="comp">
+        <div class="comp-icon">🛤️</div>
+        <div>
+          <div class="comp-name">Dual Rails</div>
+          <div class="comp-part">12V motor / 5V logic</div>
+          <div class="comp-detail">Isolated rails prevent<br/>motor noise on MCU</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ARROW: Power → MCU + Motor Driver (split) -->
   <div class="arrow-block">
     <div class="arrow-pipe"></div>
     <div class="multi-arrow">
       <div class="single-arrow">
-        <div class="arrow-pill power"><div class="arrow-dot"></div>5V DC → MCU</div>
+        <div class="arrow-pill power"><div class="arrow-dot"></div>5V → Arduino Nano</div>
         <div class="arrow-pipe"></div>
         <div style="font-size:14px; color:var(--power)">▼</div>
       </div>
       <div class="single-arrow">
-        <div class="arrow-pill power"><div class="arrow-dot"></div>12V DC → Motor Driver</div>
+        <div class="arrow-pill power"><div class="arrow-dot"></div>12V → DRV8833 Driver</div>
         <div class="arrow-pipe"></div>
         <div style="font-size:14px; color:var(--power)">▼</div>
       </div>
     </div>
   </div>
 
-  <!-- SS-02: USER INPUT -->
+  <!-- SS-02: INPUT -->
   <div class="subsystem ss-input">
     <div class="ss-header">
-      <div class="ss-icon">🖱️</div>
+      <div class="ss-icon">🔘</div>
       <div class="ss-meta">
         <div class="ss-id">SS-02 · Input Subsystem</div>
-        <div class="ss-name">User Input</div>
+        <div class="ss-name">User Input & Cycle Trigger</div>
       </div>
       <div class="ss-badge">TRIGGER</div>
     </div>
@@ -356,35 +375,44 @@
       <div class="comp">
         <div class="comp-icon">🔘</div>
         <div>
-          <div class="comp-name">Momentary Push Button</div>
-          <div class="comp-detail">Manual cycle start<br/>Normally open (NO)</div>
+          <div class="comp-name">Manual Push Button</div>
+          <div class="comp-part">External momentary switch</div>
+          <div class="comp-detail">User starts a cleaning cycle<br/>Normally open (NO)</div>
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">⚡</div>
+        <div class="comp-icon">🔁</div>
         <div>
-          <div class="comp-name">Debounce</div>
-          <div class="comp-detail">RC filter or firmware logic<br/>Prevents false triggers</div>
+          <div class="comp-name">Limit Switch (Cycle Trigger)</div>
+          <div class="comp-part">Switch SPST</div>
+          <div class="comp-detail">Triggered at end of each film loop<br/>Restarts next advance cycle</div>
         </div>
       </div>
       <div class="comp">
         <div class="comp-icon">🔗</div>
         <div>
-          <div class="comp-name">GPIO Input Pin</div>
-          <div class="comp-detail">Digital HIGH on press<br/>Pull-down resistor at rest</div>
+          <div class="comp-name">GPIO Pins</div>
+          <div class="comp-part">Arduino Nano digital I/O</div>
+          <div class="comp-detail">Button → D2 interrupt<br/>Limit switch → D3 periodic trigger</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ARROW: Button → MCU -->
   <div class="arrow-block">
     <div class="arrow-pipe"></div>
-    <div class="arrow-label-row">
-      <div class="arrow-pill input"><div class="arrow-dot"></div>Digital HIGH signal → GPIO interrupt pin</div>
+    <div class="multi-arrow">
+      <div class="single-arrow">
+        <div class="arrow-pill input-s"><div class="arrow-dot"></div>Button press → D2 interrupt</div>
+        <div class="arrow-pipe"></div>
+        <div style="font-size:14px; color:var(--input)">▼</div>
+      </div>
+      <div class="single-arrow">
+        <div class="arrow-pill input-s"><div class="arrow-dot"></div>Limit switch → D3 periodic cycle trigger</div>
+        <div class="arrow-pipe"></div>
+        <div style="font-size:14px; color:var(--input)">▼</div>
+      </div>
     </div>
-    <div class="arrow-pipe"></div>
-    <div style="font-size:14px; color:var(--input)">▼</div>
   </div>
 
   <!-- DECISION -->
@@ -392,13 +420,13 @@
     <div class="diamond">
       <div class="diamond-text">Button<br/>Pressed?</div>
     </div>
-    <div class="diamond-yes">YES → RUN CYCLE &nbsp;|&nbsp; NO → STANDBY (loop back to monitor)</div>
+    <div class="diamond-yes">YES → RUN CYCLE &nbsp;|&nbsp; NO → STANDBY &nbsp;|&nbsp; LIMIT HIT → TRIGGER NEXT CYCLE</div>
   </div>
 
   <div class="arrow-block">
     <div class="arrow-pipe"></div>
     <div class="arrow-label-row">
-      <div class="arrow-pill signal"><div class="arrow-dot"></div>Trigger event → MCU logic</div>
+      <div class="arrow-pill signal"><div class="arrow-dot"></div>Run command → firmware cycle logic</div>
     </div>
     <div class="arrow-pipe"></div>
     <div style="font-size:14px; color:var(--control)">▼</div>
@@ -410,7 +438,7 @@
       <div class="ss-icon">🧠</div>
       <div class="ss-meta">
         <div class="ss-id">SS-03 · Control Subsystem</div>
-        <div class="ss-name">Microcontroller (MCU)</div>
+        <div class="ss-name">Microcontroller</div>
       </div>
       <div class="ss-badge">BRAIN</div>
     </div>
@@ -418,32 +446,34 @@
       <div class="comp">
         <div class="comp-icon">💻</div>
         <div>
-          <div class="comp-name">Arduino / MCU</div>
-          <div class="comp-detail">Reads GPIO button input<br/>Executes run/stop logic</div>
+          <div class="comp-name">Arduino Nano</div>
+          <div class="comp-part">Arduino Nano</div>
+          <div class="comp-detail">Central logic unit<br/>Reads inputs, drives outputs</div>
         </div>
       </div>
       <div class="comp">
         <div class="comp-icon">⏱️</div>
         <div>
           <div class="comp-name">Cycle Timer (Firmware)</div>
-          <div class="comp-detail">Runs motor for fixed duration<br/>e.g. 10s ON → auto stop</div>
+          <div class="comp-part">Software timer / millis()</div>
+          <div class="comp-detail">Timed motor run duration<br/>Auto-stop after set interval</div>
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">📤</div>
+        <div class="comp-icon">📡</div>
         <div>
-          <div class="comp-name">PWM Output Pin</div>
-          <div class="comp-detail">Sends speed control signal<br/>to H-bridge motor driver</div>
+          <div class="comp-name">WiFi Module (Optional)</div>
+          <div class="comp-part">WiFi ESP8266</div>
+          <div class="comp-detail">Future: remote trigger<br/>or status logging</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ARROW: MCU → Motor Driver -->
   <div class="arrow-block">
     <div class="arrow-pipe"></div>
     <div class="arrow-label-row">
-      <div class="arrow-pill signal"><div class="arrow-dot"></div>PWM signal + Direction bit → motor driver</div>
+      <div class="arrow-pill signal"><div class="arrow-dot"></div>PWM + DIR signals → DRV8833 IN1/IN2</div>
     </div>
     <div class="arrow-pipe"></div>
     <div style="font-size:14px; color:var(--control)">▼</div>
@@ -463,32 +493,34 @@
       <div class="comp">
         <div class="comp-icon">🔧</div>
         <div>
-          <div class="comp-name">H-Bridge Motor Driver</div>
-          <div class="comp-detail">e.g. L298N / L9110<br/>Converts PWM → motor current</div>
+          <div class="comp-name">Motor Driver</div>
+          <div class="comp-part">DRV8833</div>
+          <div class="comp-detail">Dual H-bridge driver<br/>Converts PWM → stepper current</div>
         </div>
       </div>
       <div class="comp">
         <div class="comp-icon">🌀</div>
         <div>
-          <div class="comp-name">DC Motor</div>
-          <div class="comp-detail">Low RPM, high torque<br/>Drives the film conveyor</div>
+          <div class="comp-name">Stepper Motor</div>
+          <div class="comp-part">Mini Stepper Nema 8</div>
+          <div class="comp-detail">Precise step control<br/>Low-speed film advance</div>
         </div>
       </div>
       <div class="comp">
         <div class="comp-icon">🎚️</div>
         <div>
-          <div class="comp-name">Speed Control</div>
-          <div class="comp-detail">PWM duty cycle sets<br/>film advance speed</div>
+          <div class="comp-name">Step Rate Control</div>
+          <div class="comp-part">Firmware step pulses</div>
+          <div class="comp-detail">Controlled film speed<br/>via pulse frequency</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ARROW: Motor shaft → Mechanical -->
   <div class="arrow-block">
     <div class="arrow-pipe"></div>
     <div class="arrow-label-row">
-      <div class="arrow-pill mech"><div class="arrow-dot"></div>Rotational shaft torque → drive roller</div>
+      <div class="arrow-pill mech"><div class="arrow-dot"></div>Rotational shaft torque → pinion pulley</div>
     </div>
     <div class="arrow-pipe"></div>
     <div style="font-size:14px; color:var(--drive)">▼</div>
@@ -500,7 +532,7 @@
       <div class="ss-icon">🎡</div>
       <div class="ss-meta">
         <div class="ss-id">SS-05 · Mechanical Subsystem</div>
-        <div class="ss-name">Roller & Frame Assembly</div>
+        <div class="ss-name">Belt, Pulley & Frame</div>
       </div>
       <div class="ss-badge">TRANSMIT</div>
     </div>
@@ -508,32 +540,34 @@
       <div class="comp">
         <div class="comp-icon">⭕</div>
         <div>
-          <div class="comp-name">Drive Roller</div>
-          <div class="comp-detail">Motor-coupled<br/>Pulls film forward</div>
+          <div class="comp-name">Drive Pulley</div>
+          <div class="comp-part">4mm 15 Tooth Pinion</div>
+          <div class="comp-detail">Motor-coupled<br/>Engages timing belt teeth</div>
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">⭕</div>
+        <div class="comp-icon">📏</div>
         <div>
-          <div class="comp-name">Idler Roller</div>
-          <div class="comp-detail">Adjustable tension<br/>Prevents film slack / tracking errors</div>
+          <div class="comp-name">Timing Belt</div>
+          <div class="comp-part">20" / 100T 3/8" XL</div>
+          <div class="comp-detail">Positive drive — no slipping<br/>Loops around panel frame</div>
         </div>
       </div>
       <div class="comp">
         <div class="comp-icon">🪛</div>
         <div>
-          <div class="comp-name">Rigid Frame</div>
-          <div class="comp-detail">Maintains roller alignment<br/>Consistent film spacing</div>
+          <div class="comp-name">Frame Assembly</div>
+          <div class="comp-part">Rigid support structure</div>
+          <div class="comp-detail">Maintains belt tension<br/>Guides film path</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ARROW: Rollers → Film -->
   <div class="arrow-block">
     <div class="arrow-pipe"></div>
     <div class="arrow-label-row">
-      <div class="arrow-pill phys"><div class="arrow-dot"></div>Mechanical tension & film advance force</div>
+      <div class="arrow-pill phys"><div class="arrow-dot"></div>Belt tension drives film advance</div>
     </div>
     <div class="arrow-pipe"></div>
     <div style="font-size:14px; color:var(--mech)">▼</div>
@@ -551,10 +585,7 @@
         <span style="background:rgba(244,63,94,0.1); color:var(--film); font-family:var(--mono); font-size:10px; padding:4px 10px; border-radius:6px; font-weight:700;">CLEAN</span>
       </div>
     </div>
-
     <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
-
-      <!-- TOP FILM -->
       <div style="display:flex; align-items:center; gap:8px; width:100%; max-width:680px;">
         <div class="roller-circle">🔄</div>
         <div class="loop-box top-film" style="flex:1;">
@@ -563,25 +594,19 @@
         </div>
         <div class="roller-circle">🔄</div>
       </div>
-
       <div style="display:flex; justify-content:space-between; width:100%; max-width:680px; padding:0 28px;">
         <div style="font-size:12px; color:var(--muted); font-family:var(--mono);">↑ clean film re-enters top</div>
         <div style="font-size:12px; color:var(--muted); font-family:var(--mono);">dusty film exits at edge ↓</div>
       </div>
-
-      <!-- PANEL -->
       <div class="panel-block">
         <div class="icon">⬛</div>
         <div class="label">Solar Panel Surface</div>
         <div class="sub">protected · no direct dust contact · full light transmission</div>
       </div>
-
       <div style="display:flex; justify-content:space-between; width:100%; max-width:680px; padding:0 28px;">
         <div style="font-size:12px; color:var(--muted); font-family:var(--mono);">↑ film loops back up through slit</div>
         <div style="font-size:12px; color:var(--muted); font-family:var(--mono);">film goes under panel ↓</div>
       </div>
-
-      <!-- BOTTOM FILM -->
       <div style="display:flex; align-items:center; gap:8px; width:100%; max-width:680px;">
         <div class="roller-circle">🔄</div>
         <div class="loop-box bot-film" style="flex:1;">
@@ -590,7 +615,6 @@
         </div>
         <div class="roller-circle">🔄</div>
       </div>
-
     </div>
   </div>
 
@@ -601,10 +625,209 @@
     <div class="leg-item"><div class="leg-line" style="background:var(--input)"></div><span style="color:var(--input)">User Input Signal</span></div>
     <div class="leg-item"><div class="leg-line" style="background:var(--control)"></div><span style="color:var(--control)">Control / PWM Signal</span></div>
     <div class="leg-item"><div class="leg-line" style="background:var(--drive)"></div><span style="color:var(--drive)">Mechanical Torque</span></div>
-    <div class="leg-item"><div class="leg-line" style="background:var(--mech)"></div><span style="color:var(--mech)">Film Tension / Advance</span></div>
+    <div class="leg-item"><div class="leg-line" style="background:var(--mech)"></div><span style="color:var(--mech)">Belt / Film Advance</span></div>
     <div class="leg-item"><div class="leg-dash" style="border-color:var(--film)"></div><span style="color:var(--film)">Film Loop Path</span></div>
   </div>
 
 </div>
+</div>
+
+<!-- ══════════════ OVERVIEW VIEW ══════════════ -->
+<div id="overview" class="view">
+<div class="overview">
+
+  <div class="ov-header">
+    <h2>Subsystem Design Decisions</h2>
+    <p>Why each component was chosen and what role it plays in the prototype</p>
+  </div>
+
+  <!-- POWER -->
+  <div class="ov-card c-power">
+    <div class="ov-card-header">
+      <div class="ov-num">01</div>
+      <div>
+        <div class="ov-card-title">⚡ Power Subsystem</div>
+        <div class="ov-card-sub">AC-DC 12V 5A Supply + 20W Adjustable Buck Converter</div>
+      </div>
+    </div>
+    <div class="ov-body">
+      <div>
+        <div class="ov-section-label">Parts selected</div>
+        <div class="ov-parts">
+          <div class="ov-part"><span>#1</span>AC-DC Power Supply 12V 5A</div>
+          <div class="ov-part"><span>#192</span>20W Adjustable DC-DC Buck Converter</div>
+        </div>
+      </div>
+      <div class="ov-decision">
+        <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
+        <p>A <strong>12V AC-DC wall supply</strong> was chosen as the primary source because it provides stable, regulated power sufficient to drive both the stepper motor and logic electronics without the complexity of battery management. The <strong>adjustable buck converter</strong> steps the 12V rail down to 5V for the Arduino Nano and any logic-level components, keeping the motor rail and logic rail electrically isolated to prevent motor switching noise from interfering with the MCU or sensor readings.</p>
+      </div>
+      <div class="ov-why">
+        <div class="ov-why-icon">💡</div>
+        <p>Splitting into dual rails (12V motor / 5V logic) is a deliberate design choice — stepper motors create back-EMF spikes that can reset or damage microcontrollers if they share the same supply without isolation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="ov-card c-input">
+    <div class="ov-card-header">
+      <div class="ov-num">02</div>
+      <div>
+        <div class="ov-card-title">🔘 Input Subsystem</div>
+        <div class="ov-card-sub">Manual Push Button (start) + SPST Limit Switch (periodic cycle trigger)</div>
+      </div>
+    </div>
+    <div class="ov-body">
+      <div>
+        <div class="ov-section-label">Parts selected</div>
+        <div class="ov-parts">
+          <div class="ov-part"><span>#288</span>Switch SPST (Limit Switch)</div>
+          <div class="ov-part"><span>—</span>External Momentary Button</div>
+        </div>
+      </div>
+      <div class="ov-decision">
+        <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
+        <p>A <strong>manual push button</strong> was chosen to start the first cleaning cycle, keeping the prototype simple and fully observable during initial testing — the first activation is always deliberate. The <strong>SPST limit switch</strong> then takes over as a <strong>periodic cycle trigger</strong>: it is positioned at the end of the film's travel path so that every time the film completes one full advance loop and physically contacts the switch, the Arduino re-triggers the motor to begin the next cycle automatically. This creates a self-sustaining periodic cleaning rhythm driven entirely by the mechanical position of the film, requiring no software timer or external scheduling logic. The two-input approach neatly separates the <strong>initial start</strong> (button) from the <strong>ongoing periodicity</strong> (limit switch).</p>
+      </div>
+      <div class="ov-why">
+        <div class="ov-why-icon">💡</div>
+        <p>Using the limit switch as a <strong>mechanical cycle clock</strong> is an elegant choice — the film's own physical position defines the cycle period, meaning the cleaning frequency automatically scales with motor speed and requires <strong>no firmware timing logic</strong> to maintain consistent periodicity.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROL -->
+  <div class="ov-card c-ctrl">
+    <div class="ov-card-header">
+      <div class="ov-num">03</div>
+      <div>
+        <div class="ov-card-title">🧠 Control Subsystem</div>
+        <div class="ov-card-sub">Arduino Nano + WiFi ESP8266 (optional)</div>
+      </div>
+    </div>
+    <div class="ov-body">
+      <div>
+        <div class="ov-section-label">Parts selected</div>
+        <div class="ov-parts">
+          <div class="ov-part"><span>#133</span>Arduino Nano</div>
+          <div class="ov-part"><span>#174</span>WiFi ESP8266</div>
+        </div>
+      </div>
+      <div class="ov-decision">
+        <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
+        <p>The <strong>Arduino Nano</strong> was selected as the MCU because it is compact, well-documented, and directly compatible with the DRV8833 driver and stepper motor library. It provides sufficient GPIO pins for the button input, limit switch interrupt, PWM motor output, and LED indicators within a small footprint. Firmware handles cycle timing using the built-in <strong>millis()</strong> function — no external timer IC required. The <strong>ESP8266 WiFi module</strong> was procured but is not part of the core prototype; it is reserved for potential future use such as remote cycle triggering or run-time data logging over a network.</p>
+      </div>
+      <div class="ov-why">
+        <div class="ov-why-icon">💡</div>
+        <p>The Arduino Nano was preferred over a full Uno for its <strong>smaller form factor</strong>, making it easier to mount near the panel frame without adding bulk to the prototype structure.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVE -->
+  <div class="ov-card c-drive">
+    <div class="ov-card-header">
+      <div class="ov-num">04</div>
+      <div>
+        <div class="ov-card-title">⚙️ Drive Subsystem</div>
+        <div class="ov-card-sub">DRV8833 Motor Driver + Nema 8 Stepper Motor</div>
+      </div>
+    </div>
+    <div class="ov-body">
+      <div>
+        <div class="ov-section-label">Parts selected</div>
+        <div class="ov-parts">
+          <div class="ov-part"><span>#127</span>Motor Driver DRV8833</div>
+          <div class="ov-part"><span>#35</span>Mini Stepper Motor Nema 8</div>
+        </div>
+      </div>
+      <div class="ov-decision">
+        <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
+        <p>A <strong>stepper motor (Nema 8)</strong> was chosen over a standard DC motor because it provides precise, repeatable positional control — critical for ensuring the film advances a consistent distance each cycle without overshoot or slippage. The small Nema 8 form factor keeps the assembly compact. The <strong>DRV8833 dual H-bridge driver</strong> was selected because it is compatible with bipolar stepper motors, supports the low current requirements of the Nema 8, and interfaces directly with Arduino PWM pins without additional logic circuitry. It also includes built-in overcurrent protection, adding a layer of safety for the prototype.</p>
+      </div>
+      <div class="ov-why">
+        <div class="ov-why-icon">💡</div>
+        <p>A stepper motor was deliberately chosen over a DC motor to give <strong>precise, repeatable film advance</strong> — this is important for validating cleaning coverage, as each test cycle should advance the film by a known, consistent amount.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MECHANICAL -->
+  <div class="ov-card c-mech">
+    <div class="ov-card-header">
+      <div class="ov-num">05</div>
+      <div>
+        <div class="ov-card-title">🎡 Mechanical Subsystem</div>
+        <div class="ov-card-sub">XL Timing Belt + 15-Tooth Pinion Pulley</div>
+      </div>
+    </div>
+    <div class="ov-body">
+      <div>
+        <div class="ov-section-label">Parts selected</div>
+        <div class="ov-parts">
+          <div class="ov-part"><span>#137</span>20" / 100T 3/8" XL Timing Belt</div>
+          <div class="ov-part"><span>#142</span>4mm 15 Tooth Pinion Pulley</div>
+        </div>
+      </div>
+      <div class="ov-decision">
+        <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
+        <p>A <strong>toothed XL timing belt</strong> was selected over a plain flat belt or direct film drive because its positive tooth engagement eliminates slippage entirely — ensuring the film advances exactly as commanded by the stepper motor. This is essential for reproducible test results. The <strong>4mm 15-tooth pinion pulley</strong> matches the motor shaft diameter and provides a drive ratio that converts motor rotation into a controlled, low-speed film advance appropriate for dust removal without excess tension. The 20" belt length was sized to span the width of the prototype panel frame with enough slack for tensioning.</p>
+      </div>
+      <div class="ov-why">
+        <div class="ov-why-icon">💡</div>
+        <p>Toothed timing belts were specifically selected because <strong>no-slip drive</strong> is essential — if the belt slips, the stepper's precision is wasted and the film advance becomes unpredictable, making test results unreliable.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILM -->
+  <div class="ov-card c-film">
+    <div class="ov-card-header">
+      <div class="ov-num">06</div>
+      <div>
+        <div class="ov-card-title">📽️ Film Subsystem</div>
+        <div class="ov-card-sub">Transparent Conveyor Film Loop</div>
+      </div>
+    </div>
+    <div class="ov-body">
+      <div>
+        <div class="ov-section-label">Parts selected</div>
+        <div class="ov-parts">
+          <div class="ov-part"><span>—</span>Transparent plastic film (high-transmittance)</div>
+        </div>
+      </div>
+      <div class="ov-decision">
+        <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
+        <p>The core innovation of this prototype is relocating the dust collection surface from the solar panel glass to a <strong>replaceable transparent film</strong> that loops continuously over the panel like a conveyor belt. The film is made from high-transmittance plastic to minimize light loss to the panel below. As the belt advances, dust accumulates on the film surface and is carried off the active panel area. The film loops underneath the panel through a slit in the frame, where gravity assists in shedding loose particles at the roller bend before the clean surface re-enters the top. This design means the panel glass is <strong>never directly contacted</strong> by any abrasive surface, eliminating micro-scratch risk.</p>
+      </div>
+      <div class="ov-why">
+        <div class="ov-why-icon">💡</div>
+        <p>The film was chosen as a <strong>sacrificial layer</strong> — it takes on all wear and contamination instead of the panel glass. When degraded or saturated, it can be replaced cheaply, extending overall system lifetime without risking panel damage.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LED NOTE -->
+  <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; padding: 18px 22px; display:flex; gap:14px; align-items:flex-start;">
+    <div style="font-size:24px;">💡</div>
+    <div>
+      <div style="font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Status Indicators</div>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; font-weight:500;">A <strong>Red LED</strong> and <strong>Blue LED</strong> were included as simple visual status indicators — for example, Red = system powered / standby, Blue = active cleaning cycle running. These are driven directly from Arduino GPIO pins and help the team observe system state during bench testing without needing a serial monitor.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  function switchTab(id, el) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+</script>
+
 </body>
 </html>
