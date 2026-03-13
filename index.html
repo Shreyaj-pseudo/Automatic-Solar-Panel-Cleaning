@@ -489,11 +489,11 @@
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">🟢</div>
+        <div class="comp-icon">🔵</div>
         <div>
           <div class="comp-name">Status LEDs</div>
           <div class="comp-part">Red LED + Blue LED (as Green)</div>
-          <div class="comp-detail">🔴 Red = standby / off<br/>🟢 Green = cycle running</div>
+          <div class="comp-detail">🔴 Red = standby / off<br/>🔵 Blue = cycle running</div>
         </div>
       </div>
     </div>
@@ -745,8 +745,8 @@
     <div class="ov-card-header">
       <div class="ov-num">SS-03b</div>
       <div>
-        <div class="ov-card-title">🟢 Status Indicator LEDs</div>
-        <div class="ov-card-sub">🟢 Green = cycle running &nbsp;·&nbsp; 🔴 Red = standby / system off</div>
+        <div class="ov-card-title">🔵Status Indicator LEDs</div>
+        <div class="ov-card-sub">🔵 Blue= cycle running &nbsp;·&nbsp; 🔴 Red = standby / system off</div>
       </div>
     </div>
     <div class="ov-body">
@@ -759,11 +759,11 @@
       </div>
       <div class="ov-decision">
         <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
-        <p>Two LEDs provide clear, at-a-glance system status without requiring a serial monitor or display. The <strong>Green LED</strong> (the Blue LED from the parts order, used here as a green status light) is lit while a cleaning cycle is actively running — confirming the motor is turning and the film is advancing. The <strong>Red LED</strong> is lit during standby, indicating the system is powered and waiting for the next trigger — either the 60-second timer firing or a manual start from the Blynk app. Both are driven directly from Arduino GPIO output pins through current-limiting resistors, making system state immediately visible during bench testing.</p>
+        <p>Two LEDs provide clear, at-a-glance system status without requiring a serial monitor or display. The <strong>Blue LED</strong> is lit while a cleaning cycle is actively running — confirming the motor is turning and the film is advancing. The <strong>Red LED</strong> is lit during standby, indicating the system is powered and waiting for the next trigger — either the 60-second timer firing or a manual start from the Blynk app. Both are driven directly from Arduino GPIO output pins through current-limiting resistors, making system state immediately visible during bench testing.</p>
       </div>
       <div class="ov-why">
         <div class="ov-why-icon">💡</div>
-        <p><strong>Red = standby, Green = running</strong> mirrors the universally understood traffic light convention, making system state immediately readable to anyone observing the prototype without any prior knowledge of the circuit.</p>
+        <p><strong>Red = standby, Blue = running</strong> mirrors the universally understood traffic light convention, making system state immediately readable to anyone observing the prototype without any prior knowledge of the circuit.</p>
       </div>
     </div>
   </div>
