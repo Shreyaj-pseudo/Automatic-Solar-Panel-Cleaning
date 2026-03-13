@@ -16,9 +16,9 @@
     --accent3: #10b981;
     --accent4: #8b5cf6;
     --accent5: #ef4444;
+    --accent6: #3b82f6;
     --text: #e2e8f0;
     --muted: #64748b;
-    --glow: rgba(0,212,255,0.15);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,7 +29,7 @@
     font-family: 'JetBrains Mono', monospace;
     min-height: 100vh;
     padding: 40px 20px;
-    background-image: 
+    background-image:
       radial-gradient(ellipse at 20% 20%, rgba(0,212,255,0.05) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.05) 0%, transparent 50%),
       linear-gradient(rgba(30,45,64,0.3) 1px, transparent 1px),
@@ -37,295 +37,141 @@
     background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
   }
 
-  .page-title {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
+  .page-title { text-align: center; margin-bottom: 48px; }
   .page-title h1 {
     font-family: 'Syne', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--accent);
-    letter-spacing: 2px;
+    font-size: 28px; font-weight: 800;
+    color: var(--accent); letter-spacing: 2px;
     text-transform: uppercase;
     text-shadow: 0 0 30px rgba(0,212,255,0.4);
   }
-
   .page-title p {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 6px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    font-size: 11px; color: var(--muted);
+    margin-top: 6px; letter-spacing: 3px; text-transform: uppercase;
   }
 
   .arch-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    max-width: 1100px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 24px;
   }
 
-  /* ROW LAYOUTS */
-  .row {
-    display: flex;
-    gap: 16px;
-    align-items: stretch;
-    justify-content: center;
-  }
+  .row { display: flex; gap: 16px; align-items: stretch; justify-content: center; }
 
   /* SUBSYSTEM BLOCKS */
   .subsystem {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    position: relative;
-    flex: 1;
-    min-width: 180px;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; position: relative;
+    flex: 1; min-width: 180px;
     transition: transform 0.2s, box-shadow 0.2s;
   }
+  .subsystem:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
 
-  .subsystem:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  }
-
-  .subsystem.power { border-color: var(--accent2); box-shadow: 0 0 20px rgba(245,158,11,0.08); }
-  .subsystem.control { border-color: var(--accent); box-shadow: 0 0 20px rgba(0,212,255,0.08); }
-  .subsystem.sensor { border-color: var(--accent4); box-shadow: 0 0 20px rgba(139,92,246,0.08); }
-  .subsystem.drive { border-color: var(--accent3); box-shadow: 0 0 20px rgba(16,185,129,0.08); }
-  .subsystem.film { border-color: #38bdf8; box-shadow: 0 0 20px rgba(56,189,248,0.08); }
-  .subsystem.cleaning { border-color: var(--accent5); box-shadow: 0 0 20px rgba(239,68,68,0.08); }
+  .subsystem.power   { border-color: var(--accent2); box-shadow: 0 0 20px rgba(245,158,11,0.08); }
+  .subsystem.input   { border-color: var(--accent6); box-shadow: 0 0 20px rgba(59,130,246,0.10); }
+  .subsystem.control { border-color: var(--accent);  box-shadow: 0 0 20px rgba(0,212,255,0.08); }
+  .subsystem.drive   { border-color: var(--accent3); box-shadow: 0 0 20px rgba(16,185,129,0.08); }
+  .subsystem.mech    { border-color: var(--accent4); box-shadow: 0 0 20px rgba(139,92,246,0.08); }
+  .subsystem.film    { border-color: #38bdf8;        box-shadow: 0 0 20px rgba(56,189,248,0.08); }
 
   .subsystem-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
   }
-
-  .power .subsystem-label { color: var(--accent2); border-color: rgba(245,158,11,0.3); }
-  .control .subsystem-label { color: var(--accent); border-color: rgba(0,212,255,0.3); }
-  .sensor .subsystem-label { color: var(--accent4); border-color: rgba(139,92,246,0.3); }
-  .drive .subsystem-label { color: var(--accent3); border-color: rgba(16,185,129,0.3); }
-  .film .subsystem-label { color: #38bdf8; border-color: rgba(56,189,248,0.3); }
-  .cleaning .subsystem-label { color: var(--accent5); border-color: rgba(239,68,68,0.3); }
+  .power   .subsystem-label { color: var(--accent2); border-color: rgba(245,158,11,0.3); }
+  .input   .subsystem-label { color: var(--accent6); border-color: rgba(59,130,246,0.3); }
+  .control .subsystem-label { color: var(--accent);  border-color: rgba(0,212,255,0.3); }
+  .drive   .subsystem-label { color: var(--accent3); border-color: rgba(16,185,129,0.3); }
+  .mech    .subsystem-label { color: var(--accent4); border-color: rgba(139,92,246,0.3); }
+  .film    .subsystem-label { color: #38bdf8;        border-color: rgba(56,189,248,0.3); }
 
   .component {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 10px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 6px;
-    margin-bottom: 6px;
-    border: 1px solid transparent;
-    font-size: 11px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; background: rgba(255,255,255,0.03);
+    border-radius: 6px; margin-bottom: 6px;
+    border: 1px solid transparent; font-size: 11px;
   }
-
   .component:last-child { margin-bottom: 0; }
-
-  .comp-icon {
-    font-size: 18px;
-    flex-shrink: 0;
-    width: 28px;
-    text-align: center;
-  }
-
+  .comp-icon { font-size: 18px; flex-shrink: 0; width: 28px; text-align: center; }
   .comp-info { flex: 1; }
-  .comp-name { font-weight: 600; font-size: 11px; color: var(--text); }
+  .comp-name   { font-weight: 600; font-size: 11px; color: var(--text); }
+  .comp-part   { font-size: 9px; color: var(--accent3); margin-top: 1px; font-weight: 700; }
   .comp-detail { font-size: 9px; color: var(--muted); margin-top: 2px; }
 
+  .badge {
+    position: absolute; top: -10px; left: 16px;
+    background: var(--bg); padding: 2px 8px;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px; border-radius: 4px;
+  }
+  .power   .badge { color: var(--accent2); border: 1px solid rgba(245,158,11,0.4); }
+  .input   .badge { color: var(--accent6); border: 1px solid rgba(59,130,246,0.4); }
+  .control .badge { color: var(--accent);  border: 1px solid rgba(0,212,255,0.4); }
+  .drive   .badge { color: var(--accent3); border: 1px solid rgba(16,185,129,0.4); }
+  .mech    .badge { color: var(--accent4); border: 1px solid rgba(139,92,246,0.4); }
+  .film    .badge { color: #38bdf8;        border: 1px solid rgba(56,189,248,0.4); }
+
   /* ARROWS */
-  .arrow-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    padding: 4px 0;
+  .arrows-container {
+    display: flex; justify-content: center;
+    align-items: center; gap: 40px; padding: 8px 0;
   }
-
-  .arrow-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    flex: 1;
-  }
-
-  .arrow-label {
-    font-size: 9px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    text-align: center;
-  }
-
-  .arrow-line {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    font-size: 11px;
-  }
-
-  .arrow-power { color: var(--accent2); }
+  .arrow-item { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; }
+  .arrow-item span { font-size: 9px; color: var(--muted); letter-spacing: 1px; }
+  .arrow-power  { color: var(--accent2); }
+  .arrow-input  { color: var(--accent6); }
   .arrow-signal { color: var(--accent); }
-  .arrow-mech { color: var(--accent3); }
-  .arrow-data { color: var(--accent4); }
+  .arrow-mech   { color: var(--accent3); }
 
-  .connector {
-    width: 2px;
-    background: var(--border);
-    height: 20px;
-    margin: 0 auto;
-  }
-
-  /* FLOW SECTION */
+  /* FLOW */
   .flow-section {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 24px;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 24px;
   }
-
   .flow-title {
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
+    font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
   }
-
-  .flow-steps {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    overflow-x: auto;
-    padding-bottom: 4px;
-  }
-
-  .flow-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    min-width: 110px;
-    flex-shrink: 0;
-  }
-
+  .flow-steps { display: flex; align-items: center; gap: 0; overflow-x: auto; padding-bottom: 4px; }
+  .flow-step { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 120px; flex-shrink: 0; }
   .step-icon-wrap {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    border: 2px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; border: 2px solid var(--border); background: rgba(255,255,255,0.03);
   }
-
-  .step-icon-wrap.s1 { border-color: var(--accent4); background: rgba(139,92,246,0.1); }
-  .step-icon-wrap.s2 { border-color: var(--accent); background: rgba(0,212,255,0.1); }
+  .step-icon-wrap.s1 { border-color: var(--accent6); background: rgba(59,130,246,0.1); }
+  .step-icon-wrap.s2 { border-color: var(--accent);  background: rgba(0,212,255,0.1); }
   .step-icon-wrap.s3 { border-color: var(--accent3); background: rgba(16,185,129,0.1); }
-  .step-icon-wrap.s4 { border-color: #38bdf8; background: rgba(56,189,248,0.1); }
-  .step-icon-wrap.s5 { border-color: var(--accent5); background: rgba(239,68,68,0.1); }
+  .step-icon-wrap.s4 { border-color: var(--accent4); background: rgba(139,92,246,0.1); }
+  .step-icon-wrap.s5 { border-color: #38bdf8;        background: rgba(56,189,248,0.1); }
   .step-icon-wrap.s6 { border-color: var(--accent3); background: rgba(16,185,129,0.1); }
 
   .step-name { font-size: 10px; font-weight: 600; text-align: center; color: var(--text); }
   .step-desc { font-size: 9px; color: var(--muted); text-align: center; line-height: 1.4; }
+  .flow-arrow { font-size: 20px; color: var(--border); flex-shrink: 0; padding: 0 4px; margin-bottom: 24px; }
 
-  .flow-arrow {
-    font-size: 20px;
-    color: var(--border);
-    flex-shrink: 0;
-    padding: 0 4px;
-    margin-bottom: 24px;
+  /* LED STATUS BAR */
+  .led-bar {
+    display: flex; gap: 20px; align-items: center; justify-content: center;
+    padding: 12px 20px; background: var(--panel);
+    border: 1px solid var(--border); border-radius: 8px; font-size: 10px;
   }
+  .led-label { color: var(--muted); display: flex; align-items: center; gap: 7px; }
+  .led-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+  .led-green { background: #4911f1; box-shadow: 0 0 8px rgba(12, 12, 215, 0.7); }
+  .led-red   { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.7); }
 
   /* LEGEND */
   .legend {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding: 14px 20px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 10px;
-    color: var(--muted);
+    display: flex; gap: 20px; flex-wrap: wrap;
+    padding: 14px 20px; background: var(--panel);
+    border: 1px solid var(--border); border-radius: 8px;
+    font-size: 10px; color: var(--muted);
   }
-
   .legend-item { display: flex; align-items: center; gap: 6px; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .legend-dot  { width: 10px; height: 10px; border-radius: 50%; }
 
-  .badge {
-    position: absolute;
-    top: -10px;
-    left: 16px;
-    background: var(--bg);
-    padding: 2px 8px;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    border-radius: 4px;
-  }
-
-  .power .badge { color: var(--accent2); border: 1px solid rgba(245,158,11,0.4); }
-  .control .badge { color: var(--accent); border: 1px solid rgba(0,212,255,0.4); }
-  .sensor .badge { color: var(--accent4); border: 1px solid rgba(139,92,246,0.4); }
-  .drive .badge { color: var(--accent3); border: 1px solid rgba(16,185,129,0.4); }
-  .film .badge { color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); }
-  .cleaning .badge { color: var(--accent5); border: 1px solid rgba(239,68,68,0.4); }
-
-  .center-arrow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .v-arrow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    color: var(--accent);
-    font-size: 14px;
-  }
-
-  .v-arrow-label {
-    font-size: 9px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
-    padding: 4px 0;
-  }
-
-  .arrows-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    padding: 8px 0;
-  }
-
-  .arrow-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
-  }
-
-  .arrow-item span { font-size: 9px; color: var(--muted); letter-spacing: 1px; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  .row, .flow-section, .arrows-container, .led-bar, .legend { animation: fadeUp 0.35s ease both; }
 </style>
 </head>
 <body>
@@ -337,145 +183,197 @@
 
 <div class="arch-container">
 
-  <!-- ROW 1: Power + Sensor + Control -->
+  <!-- ══ ROW 1: Power + Input + Control ══ -->
   <div class="row">
+
+    <!-- SYS-01: POWER -->
     <div class="subsystem power" style="max-width:240px;">
       <span class="badge">SYS-01</span>
       <div class="subsystem-label">⚡ Power Subsystem</div>
       <div class="component">
-        <div class="comp-icon">☀️</div>
-        <div class="comp-info">
-          <div class="comp-name">Solar Panel Input</div>
-          <div class="comp-detail">Primary energy source</div>
-        </div>
-      </div>
-      <div class="component">
-        <div class="comp-icon">🔋</div>
-        <div class="comp-info">
-          <div class="comp-name">Battery Pack</div>
-          <div class="comp-detail">Backup / energy storage</div>
-        </div>
-      </div>
-      <div class="component">
         <div class="comp-icon">🔌</div>
         <div class="comp-info">
-          <div class="comp-name">Voltage Regulator</div>
-          <div class="comp-detail">Stable 5V / 12V output</div>
+          <div class="comp-name">AC-DC Supply</div>
+          <div class="comp-part">AC-DC 12V 5A</div>
+          <div class="comp-detail">Primary wall power source</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🔽</div>
+        <div class="comp-info">
+          <div class="comp-name">Buck Converter</div>
+          <div class="comp-part">20W Adjustable DC-DC</div>
+          <div class="comp-detail">Steps 12V → 5V logic rail</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🛡️</div>
+        <div class="comp-info">
+          <div class="comp-name">Dual Rails</div>
+          <div class="comp-part">12V motor / 5V logic</div>
+          <div class="comp-detail">Isolated to prevent motor noise</div>
         </div>
       </div>
     </div>
 
-    <div class="subsystem sensor" style="max-width:240px;">
+    <!-- SYS-02: INPUT (Blynk IoT) -->
+    <div class="subsystem input" style="max-width:260px;">
       <span class="badge">SYS-02</span>
-      <div class="subsystem-label">🔬 Sensor Subsystem</div>
+      <div class="subsystem-label">📱 Input Subsystem</div>
       <div class="component">
-        <div class="comp-icon">💨</div>
+        <div class="comp-icon">📱</div>
         <div class="comp-info">
-          <div class="comp-name">Dust Sensor</div>
-          <div class="comp-detail">Mounted on film surface</div>
+          <div class="comp-name">Blynk IoT App</div>
+          <div class="comp-part">Blynk Platform (smartphone)</div>
+          <div class="comp-detail">Virtual button → remote cycle start</div>
         </div>
       </div>
       <div class="component">
         <div class="comp-icon">📡</div>
         <div class="comp-info">
-          <div class="comp-name">Threshold Comparator</div>
-          <div class="comp-detail">Triggers at dust level limit</div>
+          <div class="comp-name">WiFi ESP8266</div>
+          <div class="comp-part">WiFi ESP8266 module</div>
+          <div class="comp-detail">Receives Blynk signal over WiFi<br/>Forwards command to Arduino</div>
         </div>
       </div>
       <div class="component">
-        <div class="comp-icon">🔁</div>
+        <div class="comp-icon">⏱️</div>
         <div class="comp-info">
-          <div class="comp-name">Post-Cycle Check</div>
-          <div class="comp-detail">Confirms dust cleared</div>
+          <div class="comp-name">60s Firmware Timer</div>
+          <div class="comp-part">millis() software timer</div>
+          <div class="comp-detail">Auto-triggers every 60s<br/>No physical input needed</div>
         </div>
       </div>
     </div>
 
+    <!-- SYS-03: CONTROL -->
     <div class="subsystem control" style="max-width:280px;">
       <span class="badge">SYS-03</span>
       <div class="subsystem-label">🧠 Control Subsystem</div>
       <div class="component">
         <div class="comp-icon">💻</div>
         <div class="comp-info">
-          <div class="comp-name">Microcontroller (MCU)</div>
-          <div class="comp-detail">Central logic unit (e.g. Arduino)</div>
+          <div class="comp-name">Microcontroller</div>
+          <div class="comp-part">Arduino Nano</div>
+          <div class="comp-detail">Reads ESP8266, drives motor output</div>
         </div>
       </div>
       <div class="component">
         <div class="comp-icon">⚙️</div>
         <div class="comp-info">
           <div class="comp-name">Motor Driver</div>
-          <div class="comp-detail">PWM speed control signals</div>
+          <div class="comp-part">DRV8833 H-Bridge</div>
+          <div class="comp-detail">Converts PWM → stepper current</div>
         </div>
       </div>
       <div class="component">
-        <div class="comp-icon">🛑</div>
+        <div class="comp-icon">🔵</div>
         <div class="comp-info">
-          <div class="comp-name">Limit Switch Logic</div>
-          <div class="comp-detail">Detects film end positions</div>
+          <div class="comp-name">Status LEDs</div>
+          <div class="comp-part">Red LED + Blue LED (as green)</div>
+          <div class="comp-detail">🔴 Standby &nbsp;·&nbsp; 🔵 Running</div>
         </div>
       </div>
     </div>
+
   </div>
 
-  <!-- ARROWS DOWN -->
+  <!-- ARROWS: ROW 1 → ROW 2 -->
   <div class="arrows-container">
     <div class="arrow-item arrow-power">
       ⚡ ↓
-      <span>DC Power</span>
+      <span>12V + 5V Power</span>
     </div>
-    <div class="arrow-item arrow-data">
-      📊 →
-      <span>Dust Data</span>
+    <div class="arrow-item arrow-input">
+      📱 →
+      <span>WiFi Trigger Signal</span>
     </div>
     <div class="arrow-item arrow-signal">
       🔀 ↓
-      <span>Drive Signal</span>
+      <span>PWM Drive Signal</span>
     </div>
   </div>
 
-  <!-- ROW 2: Drive + Film -->
+  <!-- ══ ROW 2: Drive + Mechanical + Film ══ -->
   <div class="row">
+
+    <!-- SYS-04: DRIVE -->
     <div class="subsystem drive">
       <span class="badge">SYS-04</span>
       <div class="subsystem-label">⚙️ Drive Subsystem</div>
       <div class="component">
-        <div class="comp-icon">🔧</div>
+        <div class="comp-icon">🌀</div>
         <div class="comp-info">
-          <div class="comp-name">DC Motor</div>
-          <div class="comp-detail">Low-speed, high-torque drive</div>
+          <div class="comp-name">Stepper Motor</div>
+          <div class="comp-part">Mini Stepper Nema 8</div>
+          <div class="comp-detail">Precise low-speed film advance</div>
         </div>
       </div>
       <div class="component">
-        <div class="comp-icon">🎡</div>
+        <div class="comp-icon">⭕</div>
         <div class="comp-info">
-          <div class="comp-name">Drive Roller</div>
-          <div class="comp-detail">Motor-coupled film advance</div>
+          <div class="comp-name">Drive Pulley</div>
+          <div class="comp-part">4mm 15-Tooth Pinion</div>
+          <div class="comp-detail">Motor-coupled belt engagement</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🎚️</div>
+        <div class="comp-info">
+          <div class="comp-name">Step Rate Control</div>
+          <div class="comp-part">Firmware pulse frequency</div>
+          <div class="comp-detail">Controls film advance speed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SYS-05: MECHANICAL -->
+    <div class="subsystem mech">
+      <span class="badge">SYS-05</span>
+      <div class="subsystem-label">🎡 Mechanical Subsystem</div>
+      <div class="component">
+        <div class="comp-icon">📏</div>
+        <div class="comp-info">
+          <div class="comp-name">Timing Belt</div>
+          <div class="comp-part">20" / 100T 3/8" XL</div>
+          <div class="comp-detail">Positive no-slip belt drive</div>
         </div>
       </div>
       <div class="component">
         <div class="comp-icon">⭕</div>
         <div class="comp-info">
           <div class="comp-name">Idler Roller</div>
-          <div class="comp-detail">Tension & alignment control</div>
+          <div class="comp-part">Adjustable tensioner</div>
+          <div class="comp-detail">Belt tension & alignment control</div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="comp-icon">🪛</div>
+        <div class="comp-info">
+          <div class="comp-name">Rigid Frame</div>
+          <div class="comp-part">Support structure</div>
+          <div class="comp-detail">Prevents wrinkling & tracking error</div>
         </div>
       </div>
     </div>
 
+    <!-- SYS-06: FILM -->
     <div class="subsystem film">
-      <span class="badge">SYS-05</span>
+      <span class="badge">SYS-06</span>
       <div class="subsystem-label">📽️ Film Subsystem</div>
       <div class="component">
         <div class="comp-icon">🪟</div>
         <div class="comp-info">
           <div class="comp-name">Transparent Film Loop</div>
-          <div class="comp-detail">High-transmittance plastic</div>
+          <div class="comp-part">High-transmittance plastic</div>
+          <div class="comp-detail">Collects dust · light passes through</div>
         </div>
       </div>
       <div class="component">
         <div class="comp-icon">⬆️</div>
         <div class="comp-info">
           <div class="comp-name">Top Path (Active)</div>
+          <div class="comp-part">Film on panel surface</div>
           <div class="comp-detail">Sits on panel, collects dust</div>
         </div>
       </div>
@@ -483,88 +381,79 @@
         <div class="comp-icon">⬇️</div>
         <div class="comp-info">
           <div class="comp-name">Return Path (Underside)</div>
-          <div class="comp-detail">Film travels under panel via slit</div>
+          <div class="comp-part">Film under panel via slit</div>
+          <div class="comp-detail">Gravity sheds dust at roller bend</div>
         </div>
       </div>
     </div>
 
-    <div class="subsystem cleaning">
-      <span class="badge">SYS-06</span>
-      <div class="subsystem-label">🧹 Cleaning Subsystem</div>
-      <div class="component">
-        <div class="comp-icon">🪛</div>
-        <div class="comp-info">
-          <div class="comp-name">Bottom Support Bracket</div>
-          <div class="comp-detail">Protrudes from panel underside</div>
-        </div>
-      </div>
-      <div class="component">
-        <div class="comp-icon">🪥</div>
-        <div class="comp-info">
-          <div class="comp-name">Brush Array</div>
-          <div class="comp-detail">Scrubs dust off return film</div>
-        </div>
-      </div>
-      <div class="component">
-        <div class="comp-icon">🌀</div>
-        <div class="comp-info">
-          <div class="comp-name">Gravity-Assist Shedding</div>
-          <div class="comp-detail">Loose particles fall at roller bend</div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- OPERATION FLOW -->
   <div class="flow-section">
     <div class="flow-title">◆ Operational Sequence Flow</div>
     <div class="flow-steps">
+
       <div class="flow-step">
-        <div class="step-icon-wrap s1">💨</div>
-        <div class="step-name">Dust Detected</div>
-        <div class="step-desc">Sensor reads above threshold on film surface</div>
+        <div class="step-icon-wrap s1">📱</div>
+        <div class="step-name">Cycle Triggered</div>
+        <div class="step-desc">Blynk app tap OR 60s firmware timer fires</div>
       </div>
       <div class="flow-arrow">→</div>
+
       <div class="flow-step">
         <div class="step-icon-wrap s2">🧠</div>
-        <div class="step-name">MCU Triggers</div>
-        <div class="step-desc">Controller sends drive signal to motor driver</div>
+        <div class="step-name">MCU Activates</div>
+        <div class="step-desc">Arduino sends PWM pulses to DRV8833</div>
       </div>
       <div class="flow-arrow">→</div>
+
       <div class="flow-step">
-        <div class="step-icon-wrap s3">⚙️</div>
-        <div class="step-name">Film Advances</div>
-        <div class="step-desc">DC motor turns roller, film moves across panel top</div>
+        <div class="step-icon-wrap s3">🌀</div>
+        <div class="step-name">Motor Turns</div>
+        <div class="step-desc">Nema 8 stepper spins pinion pulley · 🟢 LED on</div>
       </div>
       <div class="flow-arrow">→</div>
+
       <div class="flow-step">
-        <div class="step-icon-wrap s4">⬇️</div>
+        <div class="step-icon-wrap s4">📏</div>
+        <div class="step-name">Belt Advances</div>
+        <div class="step-desc">XL timing belt pulls film across panel top</div>
+      </div>
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-step">
+        <div class="step-icon-wrap s5">🔄</div>
         <div class="step-name">Film Returns</div>
-        <div class="step-desc">Dusty film loops under panel through slit</div>
+        <div class="step-desc">Dusty film loops under panel · gravity sheds dust</div>
       </div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="step-icon-wrap s5">🪥</div>
-        <div class="step-name">Brushes Clean</div>
-        <div class="step-desc">Support bracket brushes scrub film underside</div>
-      </div>
-      <div class="flow-arrow">→</div>
+
       <div class="flow-step">
         <div class="step-icon-wrap s6">☀️</div>
         <div class="step-name">Light Restored</div>
-        <div class="step-desc">Clean film re-enters top — full transmission</div>
+        <div class="step-desc">Clean film re-enters top · 🔴 LED returns to standby</div>
       </div>
+
     </div>
+  </div>
+
+  <!-- STATUS LED BAR -->
+  <div class="led-bar">
+    <span style="font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-right:8px;">Status Indicators:</span>
+    <span class="led-label"><div class="led-dot led-green"></div>Blue LED — Cycle actively running</span>
+    <span style="color:var(--border); margin: 0 8px;">|</span>
+    <span class="led-label"><div class="led-dot led-red"></div>Red LED — Standby / awaiting Blynk or 60s timer</span>
   </div>
 
   <!-- LEGEND -->
   <div class="legend">
     <div style="font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-right:8px;">Legend:</div>
     <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div> Power Flow</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div> Sensor Data</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Control Signals</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent6)"></div> WiFi / App Signal</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Control / PWM Signal</div>
     <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div> Mechanical Drive</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div> Cleaning Action</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div> Structural / Frame</div>
     <div class="legend-item"><div class="legend-dot" style="background:#38bdf8"></div> Film Path</div>
   </div>
 
