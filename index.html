@@ -166,12 +166,12 @@
   /* decision */
   .decision-wrap { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 8px 0; }
   .diamond {
-    width: 200px; height: 60px; background: var(--surface2);
+    width: 220px; height: 60px; background: var(--surface2);
     border: 2px solid var(--input); transform: skewX(-20deg);
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 0 20px rgba(59,130,246,0.15); border-radius: 4px;
   }
-  .diamond-text { transform: skewX(20deg); font-size: 13px; font-weight: 800; color: var(--input); text-align: center; line-height: 1.3; }
+  .diamond-text { transform: skewX(20deg); font-size: 12px; font-weight: 800; color: var(--input); text-align: center; line-height: 1.3; }
   .diamond-yes { font-family: var(--mono); font-size: 9px; color: var(--drive); font-weight: 700; letter-spacing: 1px; margin-top: 6px; }
 
   /* film loop */
@@ -382,39 +382,39 @@
     </div>
   </div>
 
-  <!-- SS-02: INPUT -->
+  <!-- SS-02: INPUT (PHOTORESISTOR) -->
   <div class="subsystem ss-input">
     <div class="ss-header">
-      <div class="ss-icon">📱</div>
+      <div class="ss-icon">☀️</div>
       <div class="ss-meta">
         <div class="ss-id">SS-02 · Input Subsystem</div>
-        <div class="ss-name">Blynk IoT App & Timer</div>
+        <div class="ss-name">Photoresistor Light Sensor</div>
       </div>
       <div class="ss-badge">TRIGGER</div>
     </div>
     <div class="ss-body">
       <div class="comp">
-        <div class="comp-icon">📱</div>
+        <div class="comp-icon">☀️</div>
         <div>
-          <div class="comp-name">Blynk IoT App</div>
-          <div class="comp-part">Blynk platform (smartphone)</div>
-          <div class="comp-detail">Remote cycle start via app<br/>Virtual button → ESP8266 → Arduino</div>
+          <div class="comp-name">Photoresistor (LDR)</div>
+          <div class="comp-part">Light Dependent Resistor</div>
+          <div class="comp-detail">Continuously reads ambient light<br/>Analog voltage → Arduino ADC pin</div>
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">📡</div>
+        <div class="comp-icon">⚖️</div>
         <div>
-          <div class="comp-name">WiFi ESP8266</div>
-          <div class="comp-part">WiFi ESP8266 module</div>
-          <div class="comp-detail">Receives Blynk signal over WiFi<br/>Forwards start command to MCU</div>
+          <div class="comp-name">Voltage Divider Circuit</div>
+          <div class="comp-part">LDR + fixed resistor (10kΩ)</div>
+          <div class="comp-detail">Converts LDR resistance to<br/>readable analog voltage (0–5V)</div>
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">⏱️</div>
+        <div class="comp-icon">📊</div>
         <div>
-          <div class="comp-name">1-Minute Firmware Timer</div>
-          <div class="comp-part">Software timer (millis)</div>
-          <div class="comp-detail">Runs one cycle every 60s<br/>No physical trigger needed</div>
+          <div class="comp-name">Light Threshold Logic</div>
+          <div class="comp-part">Firmware ADC threshold (software)</div>
+          <div class="comp-detail">Sufficient light → RUN belt<br/>Low light (night/dark) → STOP belt</div>
         </div>
       </div>
     </div>
@@ -424,12 +424,12 @@
     <div class="arrow-pipe"></div>
     <div class="multi-arrow">
       <div class="single-arrow">
-        <div class="arrow-pill input-s"><div class="arrow-dot"></div>Blynk virtual button → ESP8266 → MCU</div>
+        <div class="arrow-pill input-s"><div class="arrow-dot"></div>Analog voltage → Arduino ADC pin</div>
         <div class="arrow-pipe"></div>
         <div style="font-size:14px; color:var(--input)">▼</div>
       </div>
       <div class="single-arrow">
-        <div class="arrow-pill input-s"><div class="arrow-dot"></div>60s firmware timer → auto-trigger</div>
+        <div class="arrow-pill input-s"><div class="arrow-dot"></div">Threshold compare → run / stop decision</div>
         <div class="arrow-pipe"></div>
         <div style="font-size:14px; color:var(--input)">▼</div>
       </div>
@@ -439,9 +439,9 @@
   <!-- DECISION -->
   <div class="decision-wrap">
     <div class="diamond">
-      <div class="diamond-text">Trigger<br/>Received?</div>
+      <div class="diamond-text">Light Level Above<br/>Threshold?</div>
     </div>
-    <div class="diamond-yes">YES (Blynk OR 60s timer) → RUN CYCLE &nbsp;|&nbsp; NO → STANDBY (keep waiting)</div>
+    <div class="diamond-yes">YES (daylight detected) → RUN BELT &nbsp;|&nbsp; NO (low light / night) → STOP / STANDBY</div>
   </div>
 
   <div class="arrow-block">
@@ -469,23 +469,23 @@
         <div>
           <div class="comp-name">Arduino Nano</div>
           <div class="comp-part">Arduino Nano</div>
-          <div class="comp-detail">Central logic unit<br/>Reads ESP8266, drives motor output</div>
+          <div class="comp-detail">Central logic unit<br/>Reads LDR, drives motor output</div>
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">⏱️</div>
+        <div class="comp-icon">📊</div>
         <div>
-          <div class="comp-name">Cycle Timer (Firmware)</div>
-          <div class="comp-part">Software timer / millis()</div>
-          <div class="comp-detail">Auto-runs cycle every 60s<br/>Also accepts Blynk override</div>
+          <div class="comp-name">ADC Light Reading</div>
+          <div class="comp-part">analogRead() on ADC pin</div>
+          <div class="comp-detail">Continuously samples LDR voltage<br/>Compares against defined threshold</div>
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">📱</div>
+        <div class="comp-icon">⚙️</div>
         <div>
-          <div class="comp-name">WiFi + Blynk App</div>
-          <div class="comp-part">ESP8266 + Blynk IoT</div>
-          <div class="comp-detail">Remote start via Blynk app<br/>Virtual button → ESP8266 → Arduino</div>
+          <div class="comp-name">Belt Run Logic</div>
+          <div class="comp-part">Firmware threshold decision</div>
+          <div class="comp-detail">Above threshold → advance belt<br/>Below threshold → halt motor</div>
         </div>
       </div>
       <div class="comp">
@@ -651,7 +651,7 @@
   <div class="legend">
     <span class="legend-title">Legend</span>
     <div class="leg-item"><div class="leg-line" style="background:var(--power)"></div><span style="color:var(--power)">DC Power</span></div>
-    <div class="leg-item"><div class="leg-line" style="background:var(--input)"></div><span style="color:var(--input)">User Input Signal</span></div>
+    <div class="leg-item"><div class="leg-line" style="background:var(--input)"></div><span style="color:var(--input)">Sensor / Analog Signal</span></div>
     <div class="leg-item"><div class="leg-line" style="background:var(--control)"></div><span style="color:var(--control)">Control / PWM Signal</span></div>
     <div class="leg-item"><div class="leg-line" style="background:var(--drive)"></div><span style="color:var(--drive)">Mechanical Torque</span></div>
     <div class="leg-item"><div class="leg-line" style="background:var(--mech)"></div><span style="color:var(--mech)">Belt / Film Advance</span></div>
@@ -678,7 +678,7 @@
     <div>
       <div class="domain-label">Domain 01</div>
       <div class="domain-title">Software Subsystems</div>
-      <div class="domain-desc">Input logic, control firmware, wireless communication & status feedback</div>
+      <div class="domain-desc">Input sensing, control firmware, threshold logic & status feedback</div>
     </div>
   </div>
 
@@ -687,26 +687,26 @@
     <div class="ov-card-header">
       <div class="ov-num">SS-02</div>
       <div>
-        <div class="ov-card-title">📱 Input Subsystem</div>
-        <div class="ov-card-sub">Blynk IoT App + ESP8266 WiFi + 1-Minute Firmware Timer</div>
+        <div class="ov-card-title">☀️ Input Subsystem</div>
+        <div class="ov-card-sub">Photoresistor (LDR) + Voltage Divider + Firmware Threshold Logic</div>
       </div>
     </div>
     <div class="ov-body">
       <div>
         <div class="ov-section-label">Parts selected</div>
         <div class="ov-parts">
-          <div class="ov-part"><span>#174</span>WiFi ESP8266</div>
-          <div class="ov-part"><span>APP</span>Blynk IoT Platform</div>
-          <div class="ov-part"><span>FW</span>millis() software timer</div>
+          <div class="ov-part"><span>—</span>Photoresistor (LDR)</div>
+          <div class="ov-part"><span>—</span>10kΩ Fixed Resistor (voltage divider)</div>
+          <div class="ov-part"><span>FW</span>analogRead() ADC threshold (software)</div>
         </div>
       </div>
       <div class="ov-decision">
         <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
-        <p>There is no physical button or limit switch in this prototype. The system has two triggers, both handled in software. The primary trigger is the <strong>Blynk IoT mobile app</strong>: a virtual button on the Blynk dashboard sends a command over WiFi to the <strong>ESP8266 module</strong>, which forwards it to the Arduino Nano to start a cleaning cycle on demand from anywhere via smartphone. The secondary trigger is a <strong>1-minute firmware timer</strong> coded into the Arduino using the <code>millis()</code> function — regardless of any app input, the system automatically runs one cleaning cycle every 60 seconds. This dual-trigger approach means the panel cleans itself periodically without user involvement, while still allowing <strong>manual override via the Blynk app</strong> at any time.</p>
+        <p>The system uses a <strong>photoresistor (LDR)</strong> as its sole trigger — there is no physical button, timer, or wireless input. The LDR is wired in a <strong>voltage divider</strong> configuration with a fixed 10kΩ resistor, producing an analog voltage that rises and falls with ambient light intensity. This voltage is fed directly into an Arduino analog input pin and read continuously using <code>analogRead()</code>. The firmware compares the sampled value against a <strong>pre-defined light threshold</strong>: when the reading exceeds the threshold — indicating sufficient daylight for the solar panel to be active — the belt drive is enabled and the conveyor film begins advancing. When light drops below the threshold (e.g., at night or during heavy cloud cover), the Arduino halts the motor and the system enters standby. This makes the cleaning cycle <strong>inherently tied to actual solar conditions</strong> — the belt only runs when the panel is producing power, ensuring cleaning effort is never wasted in the dark.</p>
       </div>
       <div class="ov-why">
         <div class="ov-why-icon">💡</div>
-        <p>Blynk was chosen over a custom app because it requires <strong>zero backend infrastructure</strong> — the ESP8266 connects to the Blynk cloud with a single auth token, and the mobile dashboard can be set up in minutes. This lets the team validate wireless control without spending time building app software.</p>
+        <p>A photoresistor was chosen over a timer or wireless trigger because it creates a <strong>self-regulating, condition-aware system</strong> — cleaning only occurs when sunlight is present and dust removal actually benefits panel output. It requires no connectivity, no scheduling, and no user intervention, reducing system complexity significantly while making the prototype's behaviour directly responsive to the environment it is designed to operate in.</p>
       </div>
     </div>
   </div>
@@ -717,7 +717,7 @@
       <div class="ov-num">SS-03</div>
       <div>
         <div class="ov-card-title">🧠 Control Subsystem</div>
-        <div class="ov-card-sub">Arduino Nano + WiFi ESP8266 → Blynk IoT App</div>
+        <div class="ov-card-sub">Arduino Nano + LDR ADC Reading + Threshold Belt Logic</div>
       </div>
     </div>
     <div class="ov-body">
@@ -725,17 +725,16 @@
         <div class="ov-section-label">Parts selected</div>
         <div class="ov-parts">
           <div class="ov-part"><span>#133</span>Arduino Nano</div>
-          <div class="ov-part"><span>#174</span>WiFi ESP8266</div>
-          <div class="ov-part"><span>APP</span>Blynk IoT Platform</div>
+          <div class="ov-part"><span>FW</span>analogRead() threshold firmware</div>
         </div>
       </div>
       <div class="ov-decision">
         <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
-        <p>The <strong>Arduino Nano</strong> was selected as the MCU because it is compact, well-documented, and directly compatible with the DRV8833 driver and stepper motor library. It provides sufficient GPIO pins for the ESP8266 serial interface, PWM motor output, and LED status indicators within a small footprint. The firmware handles two things in parallel: listening for an incoming start command forwarded from the ESP8266 via the Blynk app, and running an internal <strong>60-second millis() timer</strong> that automatically triggers a cycle regardless of app input. When either trigger fires, the Arduino sends step pulses to the DRV8833 to advance the film for a set duration, then stops and resets the timer for the next cycle.</p>
+        <p>The <strong>Arduino Nano</strong> was selected as the MCU because it is compact, well-documented, and directly compatible with the DRV8833 driver and stepper motor library. It provides sufficient GPIO and ADC pins for reading the LDR voltage divider, outputting PWM motor signals, and driving LED status indicators within a small footprint. The firmware continuously samples the LDR via <code>analogRead()</code> and applies a <strong>software-defined threshold</strong> — when the ambient light reading crosses above the threshold, the Arduino begins issuing step pulses to the DRV8833 to advance the film; when it drops below, the motor is stopped and the system waits. The threshold value can be tuned in firmware to calibrate the system to the specific lighting conditions of the test environment.</p>
       </div>
       <div class="ov-why">
         <div class="ov-why-icon">💡</div>
-        <p>Blynk was chosen over a custom app because it requires <strong>minimal backend setup</strong> — the ESP8266 connects directly to the Blynk cloud using a simple token, and the mobile dashboard can be configured in minutes, letting the team focus on validating the mechanical prototype rather than building app infrastructure.</p>
+        <p>Centralising both sensing and motor control in the Arduino Nano keeps the circuit simple and <strong>fully self-contained</strong> — no external modules, cloud services, or wireless infrastructure are required. This reduces failure points and makes bench testing and threshold tuning straightforward.</p>
       </div>
     </div>
   </div>
@@ -745,8 +744,8 @@
     <div class="ov-card-header">
       <div class="ov-num">SS-03b</div>
       <div>
-        <div class="ov-card-title">🔵Status Indicator LEDs</div>
-        <div class="ov-card-sub">🔵 Blue= cycle running &nbsp;·&nbsp; 🔴 Red = standby / system off</div>
+        <div class="ov-card-title">🔵 Status Indicator LEDs</div>
+        <div class="ov-card-sub">🔵 Blue = belt running (daylight) &nbsp;·&nbsp; 🔴 Red = standby (low light)</div>
       </div>
     </div>
     <div class="ov-body">
@@ -759,7 +758,7 @@
       </div>
       <div class="ov-decision">
         <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
-        <p>Two LEDs provide clear, at-a-glance system status without requiring a serial monitor or display. The <strong>Blue LED</strong> is lit while a cleaning cycle is actively running — confirming the motor is turning and the film is advancing. The <strong>Red LED</strong> is lit during standby, indicating the system is powered and waiting for the next trigger — either the 60-second timer firing or a manual start from the Blynk app. Both are driven directly from Arduino GPIO output pins through current-limiting resistors, making system state immediately visible during bench testing.</p>
+        <p>Two LEDs provide clear, at-a-glance system status without requiring a serial monitor or display. The <strong>Blue LED</strong> is lit while the belt is actively running — confirming the LDR has detected sufficient light, the motor is turning, and the film is advancing. The <strong>Red LED</strong> is lit during standby, indicating the system is powered but the light level is below the threshold — the belt is halted and the system is waiting for adequate daylight. Both are driven directly from Arduino GPIO output pins through current-limiting resistors, making system state immediately visible during bench testing.</p>
       </div>
       <div class="ov-why">
         <div class="ov-why-icon">💡</div>
@@ -799,7 +798,7 @@
       </div>
       <div class="ov-decision">
         <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
-        <p>A <strong>12V AC-DC wall supply</strong> was chosen as the primary source because it provides stable, regulated power sufficient to drive both the stepper motor and logic electronics without the complexity of battery management. The <strong>adjustable buck converter</strong> steps the 12V rail down to 5V for the Arduino Nano and logic-level components, keeping the motor and logic rails electrically isolated to prevent motor switching noise from interfering with the MCU or WiFi module.</p>
+        <p>A <strong>12V AC-DC wall supply</strong> was chosen as the primary source because it provides stable, regulated power sufficient to drive both the stepper motor and logic electronics without the complexity of battery management. The <strong>adjustable buck converter</strong> steps the 12V rail down to 5V for the Arduino Nano and logic-level components, keeping the motor and logic rails electrically isolated to prevent motor switching noise from interfering with the MCU.</p>
       </div>
       <div class="ov-why">
         <div class="ov-why-icon">💡</div>
@@ -899,7 +898,7 @@
       </div>
       <div class="ov-why">
         <div class="ov-why-icon">💡</div>
-        <p>The film acts as a <strong>sacrificial layer</strong> — It absorbs all wear and contamination instead of the panel glass. When degraded or saturated, It will be cleaned by the brush mechanism before coming back onto the top of the solar panel</p>
+        <p>The film acts as a <strong>sacrificial layer</strong> — It absorbs all wear and contamination instead of the panel glass. When degraded or saturated, It will be cleaned by the brush mechanism before coming back onto the top of the solar panel.</p>
       </div>
     </div>
   </div>
