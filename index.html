@@ -171,11 +171,20 @@
   .loop-box { flex:1; padding:12px 16px; border-radius:10px; text-align:center; font-size:11px; font-weight:700; }
   .loop-box.top-film { background:rgba(244,63,94,0.08); border:1.5px dashed rgba(244,63,94,0.5); color:var(--film); }
   .loop-box.bot-film { background:rgba(14,165,233,0.08); border:1.5px dashed rgba(14,165,233,0.5); color:var(--mech); }
-  .roller-circle {
-    width:48px; height:48px; border-radius:50%;
-    border:2px solid var(--drive); background:rgba(16,185,129,0.1);
-    display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;
+
+  /* pinion circle — replaces roller-circle */
+  .pinion-circle {
+    width:52px; height:52px; border-radius:50%;
+    border:2px solid var(--drive); background:rgba(16,185,129,0.08);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    flex-shrink:0; gap:1px;
   }
+  .pinion-circle .p-icon { font-size:18px; line-height:1; }
+  .pinion-circle .p-label {
+    font-family:var(--mono); font-size:7px; font-weight:700;
+    color:var(--drive); letter-spacing:0.5px; text-transform:uppercase;
+  }
+
   .panel-block { background:rgba(16,185,129,0.05); border:2px solid rgba(16,185,129,0.3); border-radius:8px; padding:16px 28px; text-align:center; }
   .panel-block .icon { font-size:28px; }
   .panel-block .label { font-size:11px; font-weight:700; color:var(--drive); margin-top:4px; }
@@ -544,11 +553,11 @@
         </div>
       </div>
       <div class="comp">
-        <div class="comp-icon">🪵</div>
+        <div class="comp-icon">⭕</div>
         <div>
-          <div class="comp-name">Idler Rollers</div>
-          <div class="comp-part">2 × 5/16" Birch Dowels</div>
-          <div class="comp-detail">Guide belt at each end<br/>Keep film tensioned & tracking</div>
+          <div class="comp-name">Idler Pinions</div>
+          <div class="comp-part">4 × Corner Pinion Pulleys</div>
+          <div class="comp-detail">Guide belt at each corner<br/>Connected via dowels for axle support</div>
         </div>
       </div>
       <div class="comp">
@@ -556,7 +565,7 @@
         <div>
           <div class="comp-name">Frame Assembly</div>
           <div class="comp-part">Rigid support structure</div>
-          <div class="comp-detail">Maintains dowel spacing<br/>Guides film path over panel</div>
+          <div class="comp-detail">Maintains pinion spacing<br/>Guides film path over panel</div>
         </div>
       </div>
     </div>
@@ -584,35 +593,55 @@
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+
+      <!-- TOP ROW — 2 pinions + top film -->
       <div style="display:flex;align-items:center;gap:8px;width:100%;max-width:680px;">
-        <div class="roller-circle">🪵</div>
+        <div class="pinion-circle">
+          <div class="p-icon">⚙️</div>
+          <div class="p-label">PINION</div>
+        </div>
         <div class="loop-box top-film" style="flex:1;">
           ⬆️ &nbsp; FILM — TOP SURFACE (Active)
           <div style="font-family:var(--mono);font-size:9px;margin-top:4px;opacity:0.7;">Lies on black acrylic panel proxy · collects dust · transparent to light</div>
         </div>
-        <div class="roller-circle">🪵</div>
+        <div class="pinion-circle">
+          <div class="p-icon">⚙️</div>
+          <div class="p-label">PINION</div>
+        </div>
       </div>
+
       <div style="display:flex;justify-content:space-between;width:100%;max-width:680px;padding:0 28px;">
         <div style="font-size:12px;color:var(--muted);font-family:var(--mono);">↑ clean film re-enters top</div>
         <div style="font-size:12px;color:var(--muted);font-family:var(--mono);">dusty film exits at edge ↓</div>
       </div>
+
       <div class="panel-block">
         <div class="icon">⬛</div>
         <div class="label">Black Acrylic Panel (Solar Panel Proxy)</div>
         <div class="sub">protected · no direct dust contact · simulates panel surface for prototype testing</div>
       </div>
+
       <div style="display:flex;justify-content:space-between;width:100%;max-width:680px;padding:0 28px;">
-        <div style="font-size:12px;color:var(--muted);font-family:var(--mono);">↑ film loops back up via dowel roller</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--mono);">↑ film loops back up via pinion</div>
         <div style="font-size:12px;color:var(--muted);font-family:var(--mono);">film goes under panel ↓</div>
       </div>
+
+      <!-- BOTTOM ROW — 2 pinions + return film -->
       <div style="display:flex;align-items:center;gap:8px;width:100%;max-width:680px;">
-        <div class="roller-circle">🪵</div>
+        <div class="pinion-circle">
+          <div class="p-icon">⚙️</div>
+          <div class="p-label">PINION</div>
+        </div>
         <div class="loop-box bot-film" style="flex:1;">
           ⬇️ &nbsp; FILM — RETURN PATH (Underside)
-          <div style="font-family:var(--mono);font-size:9px;margin-top:4px;opacity:0.7;">Travels under panel via birch dowel idlers · gravity assists dust shedding at roller bend</div>
+          <div style="font-family:var(--mono);font-size:9px;margin-top:4px;opacity:0.7;">Travels under panel via pinion corners · gravity assists dust shedding at pinion bend</div>
         </div>
-        <div class="roller-circle">🪵</div>
+        <div class="pinion-circle">
+          <div class="p-icon">⚙️</div>
+          <div class="p-label">PINION</div>
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -621,7 +650,7 @@
     <div class="leg-item"><div class="leg-line" style="background:var(--power)"></div><span style="color:var(--power)">DC Power</span></div>
     <div class="leg-item"><div class="leg-line" style="background:var(--input)"></div><span style="color:var(--input)">Sensor / Analog Signal</span></div>
     <div class="leg-item"><div class="leg-line" style="background:var(--control)"></div><span style="color:var(--control)">Control / STEP Signal</span></div>
-    <div class="leg-item"><div class="leg-line" style="background:var(--drive)"></div><span style="color:var(--drive)">Mechanical Torque</span></div>
+    <div class="leg-item"><div class="leg-line" style="background:var(--drive)"></div><span style="color:var(--mech)">Mechanical Torque</span></div>
     <div class="leg-item"><div class="leg-line" style="background:var(--mech)"></div><span style="color:var(--mech)">Belt / Film Advance</span></div>
     <div class="leg-item"><div class="leg-dash" style="border-color:var(--film)"></div><span style="color:var(--film)">Film Loop Path</span></div>
   </div>
@@ -815,26 +844,26 @@
       <div class="ov-num">SS-05</div>
       <div>
         <div class="ov-card-title">🎡 Mechanical Subsystem</div>
-        <div class="ov-card-sub">5mm Pinion Pulley + XL Timing Belt + 5/16" Birch Dowel Idlers + Frame</div>
+        <div class="ov-card-sub">5mm Drive Pinion + XL Timing Belt + 4 × Corner Idler Pinions + Frame</div>
       </div>
     </div>
     <div class="ov-body">
       <div>
         <div class="ov-section-label">Parts selected</div>
         <div class="ov-parts">
-          <div class="ov-part"><span>—</span>5mm Pinion Pulley (motor shaft)</div>
+          <div class="ov-part"><span>—</span>5mm Drive Pinion Pulley (motor shaft)</div>
           <div class="ov-part"><span>—</span>20" / 100T 3/8" XL Timing Belt</div>
-          <div class="ov-part"><span>—</span>2 × 5/16" Birch Dowels (idler rollers)</div>
+          <div class="ov-part"><span>—</span>4 × Corner Idler Pinions (dowel-mounted)</div>
           <div class="ov-part"><span>—</span>Rigid Frame Assembly</div>
         </div>
       </div>
       <div class="ov-decision">
         <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
-        <p>A <strong>toothed XL timing belt</strong> was selected because its positive tooth engagement eliminates slippage entirely — ensuring the film advances exactly as commanded by the stepper motor. The <strong>5mm pinion pulley</strong> press-fits directly to the Nema 17 output shaft and drives the belt. At each end of the frame, a <strong>5/16" birch dowel</strong> acts as a low-friction idler roller, guiding the belt and film around the panel edges without the need for machined rollers. Birch dowels were chosen for their availability, smooth surface finish, and sufficient rigidity for prototype use. The rigid frame maintains consistent dowel spacing, prevents belt sag, and keeps the film tracking straight across the panel surface.</p>
+        <p>A <strong>toothed XL timing belt</strong> was selected because its positive tooth engagement eliminates slippage entirely — ensuring the film advances exactly as commanded by the stepper motor. The <strong>5mm drive pinion</strong> press-fits directly to the Nema 17 output shaft and drives the belt. At each of the four corners of the frame, an <strong>idler pinion pulley</strong> mounted on a birch dowel axle guides the belt and film around the panel edges. The pinions provide positive toothed engagement at every corner, preventing the belt from skipping or drifting. The rigid frame maintains consistent pinion spacing, prevents belt sag, and keeps the film tracking straight across the panel surface.</p>
       </div>
       <div class="ov-why">
         <div class="ov-why-icon">💡</div>
-        <p>Birch dowels as idlers were a deliberate <strong>low-cost, low-complexity choice</strong> for the prototype — they provide a smooth cylindrical bearing surface for the belt without requiring bearings, brackets, or machined parts, keeping fabrication time minimal while still delivering consistent film guidance.</p>
+        <p>Using toothed pinions at all four corners rather than plain cylindrical rollers ensures the belt stays <strong>positively indexed at every bend</strong> — eliminating any risk of the belt slipping off-tooth and losing film position, which is critical for consistent dust removal coverage across the full panel surface.</p>
       </div>
     </div>
   </div>
@@ -858,7 +887,7 @@
       </div>
       <div class="ov-decision">
         <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
-        <p>The core innovation of this prototype is relocating the dust collection surface from the panel face to a <strong>replaceable transparent film</strong> that loops continuously over it like a conveyor belt. As the belt advances, dust accumulates on the film and is carried off the active surface. The film loops underneath the panel via the birch dowel idlers, where gravity assists in shedding loose particles at the roller bend before the clean surface re-enters the top. <strong>Black acrylic</strong> is used in place of an actual solar panel for prototype testing — it replicates the flat, smooth, dark surface of a solar panel at a fraction of the cost, allowing dust accumulation and film contact behaviour to be evaluated without risking damage to real photovoltaic cells.</p>
+        <p>The core innovation of this prototype is relocating the dust collection surface from the panel face to a <strong>replaceable transparent film</strong> that loops continuously over it like a conveyor belt. As the belt advances, dust accumulates on the film and is carried off the active surface. The film loops underneath the panel via the corner pinion pulleys, where gravity assists in shedding loose particles at the pinion bend before the clean surface re-enters the top. <strong>Black acrylic</strong> is used in place of an actual solar panel for prototype testing — it replicates the flat, smooth, dark surface of a solar panel at a fraction of the cost, allowing dust accumulation and film contact behaviour to be evaluated without risking damage to real photovoltaic cells.</p>
       </div>
       <div class="ov-why">
         <div class="ov-why-icon">💡</div>
