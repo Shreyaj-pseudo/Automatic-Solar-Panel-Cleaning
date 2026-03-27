@@ -1,0 +1,184 @@
+\documentclass[12pt]{article}
+
+% ---------------- PACKAGES ----------------
+\usepackage[margin=0.5in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+\onehalfspacing
+
+% ---------------- TITLE FORMAT ----------------
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+
+% ---------------- DOCUMENT ----------------
+\begin{document}
+
+\begin{center}
+    \LARGE \textbf{Prototype Overview} \\
+    \large Automated Solar Panel Dust Removal System \\
+\end{center}
+
+\vspace{0.5em}
+
+% ------------------------------------------------
+\section{Introduction}
+
+This document presents a high-level overview of the Phase 3 prototype system developed to enable automated dust removal from solar panels using a non-abrasive film-based mechanism. The prototype integrates mechanical, structural, and control subsystems into a functional electromechanical system capable of periodic cleaning.
+
+This overview summarizes the design, fabrication, integration, and verification processes undertaken, highlights key design decisions and implementation challenges, and evaluates the performance of the as-built system relative to the project specifications. It also serves as a roadmap to supporting artifacts contained within Sections 04.1–04.4 of the Design Dossier.
+
+% ------------------------------------------------
+\section{System Architecture}
+
+The prototype system is composed of four primary subsystems:
+
+\begin{itemize}
+    \item \textbf{Mechanical Drive System:} GT2 timing belts driven by a single NEMA 17 stepper motor via a shared shaft
+    \item \textbf{Film Transport System:} Transparent film attached to belts and translated across the panel surface
+    \item \textbf{Structural Frame:} Laser-cut plywood structure supporting shafts, pulleys, and panel
+    \item \textbf{Control System:} Raspberry Pi Pico W with A4988 driver executing timed actuation
+\end{itemize}
+
+\textbf{[INSERT FIGURE HERE: System Architecture Diagram]}  
+\textit{Caption: System-level architecture of the as-built prototype showing subsystem interactions.}
+
+% ------------------------------------------------
+\section{From Concept to As-Built Prototype}
+
+The Phase 2 concept proposed a belt-driven cleaning mechanism; however, several key implementation-level changes were required during Phase 3 to achieve a functional prototype:
+
+\begin{itemize}
+    \item Transition from multi-motor concepts to a \textbf{single stepper motor with shared shaft} to eliminate synchronization issues
+    \item Replacement of conceptual materials with a \textbf{durable transparent film} sourced from MyFab
+    \item Adoption of \textbf{stitched attachment} for reliability over repeated cycles
+    \item Introduction of a \textbf{passive microfiber cleaning subsystem} to enable film reuse
+    \item Simplification of control from wireless/sensor-based to a \textbf{standalone timed loop}
+\end{itemize}
+
+These modifications reflect a shift from conceptual feasibility to implementation-driven design.
+
+\textbf{REFERENCE:} Prototype Design Converging Analysis (04.1) → \textit{INSERT LINK}
+
+% ------------------------------------------------
+\section{Detailed Prototype Design}
+
+The as-built prototype consists of a $\sim$12$\times$12 inch laser-cut plywood frame supporting parallel GT2 timing belts looped over idler pulleys and a driven shaft. A transparent film is attached to the belts and spans across the solar panel surface.
+
+A NEMA 17 stepper motor drives the system via a wooden dowel shaft coupled using a 3D-printed interface. The return path of the film passes over a microfiber cloth strip, which removes accumulated dust prior to re-entry.
+
+The control system is implemented using a Raspberry Pi Pico W executing a timed actuation loop.
+
+\textbf{[INSERT FIGURE HERE: Prototype Photograph]}  
+\textit{Caption: As-built prototype system showing belt, film, and structural integration.}
+
+\textbf{REFERENCES:}
+\begin{itemize}
+    \item Prototype Design Documentation (04.1) → \textit{INSERT LINK}
+    \item Build Documentation (04.2) → \textit{INSERT LINK}
+\end{itemize}
+
+% ------------------------------------------------
+\section{Iterative Design and Build Process}
+
+The prototype was developed through iterative cycles of design, fabrication, and testing.
+
+Initial iterations focused on validating belt tracking and film motion using temporary materials such as parchment paper and tape-based attachment. Subsequent iterations improved durability and alignment through material upgrades, stitched attachment, and structural refinements.
+
+Key iterations included:
+\begin{itemize}
+    \item Belt tracking validation with temporary film
+    \item Integration of full-width shaft for synchronized motion
+    \item Transition to final film material and attachment method
+    \item Addition of microfiber cleaning subsystem
+\end{itemize}
+
+\textbf{REFERENCES:}
+\begin{itemize}
+    \item Build Iterations (04.2) → \textit{INSERT LINK}
+    \item Integration Process (04.3) → \textit{INSERT LINK}
+\end{itemize}
+
+% ------------------------------------------------
+\section{Key Design Decisions}
+
+Final design decisions were determined through trade-off analysis evaluating feasibility, reliability, and manufacturability:
+
+\begin{itemize}
+    \item \textbf{Single Motor Drive:} Eliminates synchronization risks between belts
+    \item \textbf{Laser-Cut Plywood Frame:} Enables rapid iteration and easy modification
+    \item \textbf{Wooden Dowel Shaft + Coupler:} Provides sufficient rigidity while remaining manufacturable
+    \item \textbf{Stitched Film Attachment:} Improves durability over repeated cycles
+    \item \textbf{Passive Microfiber Cleaning:} Enables film reuse with minimal added complexity
+\end{itemize}
+
+\textbf{REFERENCE:} Converging Trade-Off Analysis (04.1) → \textit{INSERT LINK}
+
+% ------------------------------------------------
+\section{Integration Challenges and Debugging}
+
+Several key challenges were encountered during system integration:
+
+\textbf{Belt-Pulley Height Mismatch:}  
+Pulley flanges extended above the belt surface, preventing proper film contact. This was resolved by layering additional plastic material to elevate the contact surface.
+
+\textbf{Shaft Friction:}  
+Wood-on-wood contact between dowels and frame introduced excessive friction. This was mitigated by introducing a metal shaft coupler interface, reducing rotational resistance.
+
+\textbf{Dowel Sizing and Alignment:}  
+Material constraints required adaptation to available dowel sizes. Initial sanding solutions resulted in misalignment and uneven rotation. The final solution used smaller dowels with screw-based alignment.
+
+\textbf{[INSERT FIGURES HERE: Debugging Images]}  
+\textit{Caption: Examples of integration challenges and implemented fixes.}
+
+\textbf{REFERENCE:} Integration Documentation (04.3) → \textit{INSERT LINK}
+
+% ------------------------------------------------
+\section{Prototype Performance Assessment}
+
+The prototype successfully demonstrates:
+
+\begin{itemize}
+    \item Controlled advancement of film across the panel surface
+    \item Reliable belt synchronization via single motor drive
+    \item Feasibility of passive dust removal using microfiber cleaning
+\end{itemize}
+
+Limitations include:
+
+\begin{itemize}
+    \item Film tension and alignment require further refinement
+    \item Long-term durability remains unverified
+    \item Quantitative cleaning efficiency requires further testing
+\end{itemize}
+
+\textbf{REFERENCE:} Verification Results (04.4) → \textit{INSERT LINK}
+
+% ------------------------------------------------
+\section{Design Reflection and Concept Validation}
+
+The prototype validates the feasibility of a belt-driven film cleaning mechanism and highlights synchronization, material durability, and simplicity of control as critical design considerations.
+
+The system demonstrates that mechanical synchronization is essential for reliable operation, and that reducing system complexity improves robustness during early-stage prototyping.
+
+These findings inform future iterations of the design concept.
+
+% ------------------------------------------------
+\section{Dossier Navigation}
+
+This document serves as a roadmap to the Phase 3 work:
+
+\begin{itemize}
+    \item \textbf{04.1 Prototype Design:} Design decisions and trade-off analysis
+    \item \textbf{04.2 Build:} Fabrication and iteration process
+    \item \textbf{04.3 Integration:} Assembly challenges and debugging
+    \item \textbf{04.4 Verification:} Testing and performance evaluation
+\end{itemize}
+
+\end{document}
