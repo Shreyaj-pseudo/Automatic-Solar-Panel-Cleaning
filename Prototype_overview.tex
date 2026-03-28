@@ -1,184 +1,164 @@
 \documentclass[12pt]{article}
 
-% ---------------- PACKAGES ----------------
 \usepackage[margin=0.5in]{geometry}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{titlesec}
-\usepackage{setspace}
+\usepackage{parskip}
 \usepackage{hyperref}
-\usepackage{enumitem}
 
-\setlength{\parskip}{0.5em}
-\setlength{\parindent}{0pt}
-\onehalfspacing
-
-% ---------------- TITLE FORMAT ----------------
 \titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
 \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
 
-% ---------------- DOCUMENT ----------------
+\title{\textbf{Prototype Overview: Automated Solar Panel Cleaning System}}
+\author{Team 0104A}
+\date{}
+
 \begin{document}
 
-\begin{center}
-    \LARGE \textbf{Prototype Overview} \\
-    \large Automated Solar Panel Dust Removal System \\
-\end{center}
+\maketitle
 
-\vspace{0.5em}
-
-% ------------------------------------------------
 \section{Introduction}
 
-This document presents a high-level overview of the Phase 3 prototype system developed to enable automated dust removal from solar panels using a non-abrasive film-based mechanism. The prototype integrates mechanical, structural, and control subsystems into a functional electromechanical system capable of periodic cleaning.
+This document presents a comprehensive overview of the design, fabrication, integration, and verification of the Phase 3 Prototype System for the automated solar panel cleaning solution. The objective of this prototype was to validate the feasibility of a non-abrasive, film-based cleaning mechanism capable of removing dust while maintaining high light transmission and minimizing material consumption.
 
-This overview summarizes the design, fabrication, integration, and verification processes undertaken, highlights key design decisions and implementation challenges, and evaluates the performance of the as-built system relative to the project specifications. It also serves as a roadmap to supporting artifacts contained within Sections 04.1–04.4 of the Design Dossier.
+The final as-built prototype consists of a belt-driven transparent film system actuated by a stepper motor and controlled via a microcontroller with light-based activation. This document summarizes the system architecture, detailed design, key design decisions, integration challenges, and performance relative to the developed specifications, while referencing supporting artifacts across the Design Dossier.
 
-% ------------------------------------------------
 \section{System Architecture}
 
-The prototype system is composed of four primary subsystems:
+\subsection{Mechanical Design}
 
-\begin{itemize}
-    \item \textbf{Mechanical Drive System:} GT2 timing belts driven by a single NEMA 17 stepper motor via a shared shaft
-    \item \textbf{Film Transport System:} Transparent film attached to belts and translated across the panel surface
-    \item \textbf{Structural Frame:} Laser-cut plywood structure supporting shafts, pulleys, and panel
-    \item \textbf{Control System:} Raspberry Pi Pico W with A4988 driver executing timed actuation
-\end{itemize}
+The structural frame was constructed from machine plywood (approximately 25 cm $\times$ 20 cm), selected for rapid fabrication and ease of modification (see \href{}{04.2 Build}). Two parallel GT2 timing belts are routed along the frame and supported by front and rear idler pulleys mounted on wooden dowels.
 
-\textbf{[INSERT FIGURE HERE: System Architecture Diagram]}  
-\textit{Caption: System-level architecture of the as-built prototype showing subsystem interactions.}
+A transparent polymer film spans the width of the system and is mechanically attached to the belts. The film travels across the acrylic panel surface, acting as a sacrificial cleaning interface. Unlike the conceptual design, the implemented system required the addition of a secondary film layer above the belts to ensure proper contact due to pulley height constraints.
 
-% ------------------------------------------------
-\section{From Concept to As-Built Prototype}
+Dust removal is achieved through a passive cleaning mechanism consisting of a microfiber cloth positioned along the return path of the film near the rear shaft. This location was selected to maximize cleaning effectiveness due to increased tension in the film during bending.
 
-The Phase 2 concept proposed a belt-driven cleaning mechanism; however, several key implementation-level changes were required during Phase 3 to achieve a functional prototype:
+\subsection{Electrical Design}
 
-\begin{itemize}
-    \item Transition from multi-motor concepts to a \textbf{single stepper motor with shared shaft} to eliminate synchronization issues
-    \item Replacement of conceptual materials with a \textbf{durable transparent film} sourced from MyFab
-    \item Adoption of \textbf{stitched attachment} for reliability over repeated cycles
-    \item Introduction of a \textbf{passive microfiber cleaning subsystem} to enable film reuse
-    \item Simplification of control from wireless/sensor-based to a \textbf{standalone timed loop}
-\end{itemize}
+The system is driven by a single NEMA 17 stepper motor connected to a shared wooden dowel shaft via a 3D-printed coupler. This configuration ensures synchronized motion across both belts (see \href{https://docs.google.com/document/d/1SjXE1apFuHjjCuuLbA2FhoU220ktpOhYzkgukCrVGak/edit?tab=t.0#heading=h.u59ujjk9x2b2}{03-ConceptualDesign: Pros and Cons Converging}).
 
-These modifications reflect a shift from conceptual feasibility to implementation-driven design.
+Motor control is achieved using an A4988 stepper driver, which interfaces with the Raspberry Pi Pico W microcontroller. The electrical subsystem was designed to minimize component count while ensuring sufficient torque to overcome frictional resistance (see 04.3 Integration).
 
-\textbf{REFERENCE:} Prototype Design Converging Analysis (04.1) → \textit{INSERT LINK}
+\subsection{Software Design}
 
-% ------------------------------------------------
-\section{Detailed Prototype Design}
+The control system utilizes a photoresistor (LDR) to detect reductions in light intensity caused by dust accumulation. Upon detecting a threshold drop in light transmission, the Pico W triggers a single motor rotation cycle.
 
-The as-built prototype consists of a $\sim$12$\times$12 inch laser-cut plywood frame supporting parallel GT2 timing belts looped over idler pulleys and a driven shaft. A transparent film is attached to the belts and spans across the solar panel surface.
+This represents a significant deviation from the original periodic actuation concept, introducing an event-driven control strategy that reduces unnecessary energy consumption and aligns with system objectives for low intervention (see \href{https://drive.google.com/drive/u/4/folders/1BAiKmYneszaR3hTWZbHwuF2bdrrcZR0l}{04.1 Prototype Feedback Notes and Resulting Iteration} and \href{https://docs.google.com/spreadsheets/d/1ZgWdYc8OaodtdYpCcwwQakVWo96tWj5T/edit?gid=1861155477#gid=1861155477}{04.4 VerificationProtocol+Results} ).
 
-A NEMA 17 stepper motor drives the system via a wooden dowel shaft coupled using a 3D-printed interface. The return path of the film passes over a microfiber cloth strip, which removes accumulated dust prior to re-entry.
+Figure 1 presents the system architecture of the as-built Prototype System, illustrating the interaction between the mechanical, electrical, and software subsystems.
 
-The control system is implemented using a Raspberry Pi Pico W executing a timed actuation loop.
+\begin{figure}[H]
+    \centering
+    
+    \includegraphics[width=0.8\linewidth]{assets/conveyor_flowchart.png}
+    
+    \caption{System architecture of the as-built prototype system.}
+\end{figure}
 
-\textbf{[INSERT FIGURE HERE: Prototype Photograph]}  
-\textit{Caption: As-built prototype system showing belt, film, and structural integration.}
+The system integrates three primary subsystems:
 
-\textbf{REFERENCES:}
-\begin{itemize}
-    \item Prototype Design Documentation (04.1) → \textit{INSERT LINK}
-    \item Build Documentation (04.2) → \textit{INSERT LINK}
-\end{itemize}
+\textbf{Mechanical Subsystem:} Responsible for film transport and cleaning action through synchronized belt motion.
 
-% ------------------------------------------------
-\section{Iterative Design and Build Process}
+\textbf{Electrical Subsystem:} Provides controlled actuation using a NEMA 17 stepper motor and A4988 driver.
 
-The prototype was developed through iterative cycles of design, fabrication, and testing.
+\textbf{Software Subsystem:} Enables autonomous activation through a photoresistor-based light sensing mechanism.
 
-Initial iterations focused on validating belt tracking and film motion using temporary materials such as parchment paper and tape-based attachment. Subsequent iterations improved durability and alignment through material upgrades, stitched attachment, and structural refinements.
+ Here is a more detailed overview of the \href{https://docs.google.com/document/d/1Fe0dRtZV8c90UYq46zju22RK1K1eeR_mjBnPMjBk4DA/edit?tab=t.0}{04.1-System Architecture}
 
-Key iterations included:
-\begin{itemize}
-    \item Belt tracking validation with temporary film
-    \item Integration of full-width shaft for synchronized motion
-    \item Transition to final film material and attachment method
-    \item Addition of microfiber cleaning subsystem
-\end{itemize}
+\section{As-Built Prototype System}
 
-\textbf{REFERENCES:}
-\begin{itemize}
-    \item Build Iterations (04.2) → \textit{INSERT LINK}
-    \item Integration Process (04.3) → \textit{INSERT LINK}
-\end{itemize}
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{0.7\textwidth}{
+    \centering
+    \textbf{PLACEHOLDER: As-Built Prototype Photo}
 
-% ------------------------------------------------
+    \vspace{0.5em}
+    \textit{Insert real image showing full assembly: frame, belts, film, motor}
+    }}
+    \caption{As-built prototype system.}
+\end{figure}
+
+The final prototype differs from the initial design concept in several critical ways, reflecting practical constraints and iterative refinement during Phase 3.
+
+\section{Design Process and Iteration}
+
+The design process followed a structured iterative workflow consisting of divergence, convergence, fabrication, and integration stages.
+
+Initial concept generation and evaluation were conducted using brainstorming, SCAMPER, and Pugh analysis methods (see \href{https://drive.google.com/drive/u/4/folders/1H7HwvAO-qYqSBoSMpMYzfeY-mcBnA41G}{03-Conceptual Design}). These were followed by a trade-off analysis to converge on final subsystem decisions, including motor selection, film material, and attachment methods.
+
+Fabrication (see 04.2 Build) involved rapid prototyping using MyFab resources, enabling quick iteration on frame geometry and shaft configurations. Integration (see 04.3 Integration) revealed several mechanical and alignment challenges, which required refinement of shaft interfaces, belt alignment, and friction reduction strategies.
+
+This iterative process ensured that the final prototype reflects both design intent and practical constraints encountered during implementation.
+
 \section{Key Design Decisions}
 
-Final design decisions were determined through trade-off analysis evaluating feasibility, reliability, and manufacturability:
+Several critical design decisions significantly influenced the performance and feasibility of the prototype:
 
-\begin{itemize}
-    \item \textbf{Single Motor Drive:} Eliminates synchronization risks between belts
-    \item \textbf{Laser-Cut Plywood Frame:} Enables rapid iteration and easy modification
-    \item \textbf{Wooden Dowel Shaft + Coupler:} Provides sufficient rigidity while remaining manufacturable
-    \item \textbf{Stitched Film Attachment:} Improves durability over repeated cycles
-    \item \textbf{Passive Microfiber Cleaning:} Enables film reuse with minimal added complexity
-\end{itemize}
+\textbf{Single Motor Drive System:} A single NEMA 17 motor driving a shared shaft was selected over dual motors to eliminate synchronization issues and ensure uniform belt motion.
 
-\textbf{REFERENCE:} Converging Trade-Off Analysis (04.1) → \textit{INSERT LINK}
+\textbf{Transparent Film Selection:} A MyFab-sourced plastic sheet was chosen for its durability and flexibility, balancing optical clarity with mechanical robustness.
 
-% ------------------------------------------------
+\textbf{Stitched Film Attachment:} Stitching was selected over adhesive methods for improved reliability during repeated cycles.
+
+\textbf{Plywood Frame Construction:} Laser-cut plywood enabled rapid iteration and sufficient structural integrity for the prototype scale.
+
+\textbf{Photoresistor-Based Control:} Transitioning from periodic activation to light-triggered control improved energy efficiency and reduced unnecessary operation.
+
+These decisions are supported by trade-off analysis and documented in 04.1 PrototypeDesign.
+
 \section{Integration Challenges and Debugging}
 
-Several key challenges were encountered during system integration:
+During integration, several significant challenges were encountered:
 
-\textbf{Belt-Pulley Height Mismatch:}  
-Pulley flanges extended above the belt surface, preventing proper film contact. This was resolved by layering additional plastic material to elevate the contact surface.
+\textbf{Pulley Height Mismatch:} The belt sat below the pulley edges, preventing proper film contact. This was resolved by layering additional material to raise the belt surface.
 
-\textbf{Shaft Friction:}  
-Wood-on-wood contact between dowels and frame introduced excessive friction. This was mitigated by introducing a metal shaft coupler interface, reducing rotational resistance.
+\textbf{High Friction in Shaft Supports:} Wood-on-wood contact created excessive resistance. This was mitigated by introducing a metal shaft coupler, reducing friction and improving rotational smoothness.
 
-\textbf{Dowel Sizing and Alignment:}  
-Material constraints required adaptation to available dowel sizes. Initial sanding solutions resulted in misalignment and uneven rotation. The final solution used smaller dowels with screw-based alignment.
+\textbf{Dowel Sizing Constraints:} Available dowel sizes did not match pulley interfaces, leading to alignment issues. The final solution utilized smaller dowels secured with screws to ensure proper alignment and consistent rotation.
 
-\textbf{[INSERT FIGURES HERE: Debugging Images]}  
-\textit{Caption: Examples of integration challenges and implemented fixes.}
+These challenges and their resolutions are documented in detail in 04.3 Integration.
 
-\textbf{REFERENCE:} Integration Documentation (04.3) → \textit{INSERT LINK}
+\section{Performance Relative to Specifications}
 
-% ------------------------------------------------
-\section{Prototype Performance Assessment}
+The prototype system was evaluated against key specifications (see \href{https://docs.google.com/spreadsheets/d/19Sxo5atl2CzB1H0pCT4QkIaBSSTG0vjS/edit?gid=1424656124#gid=1424656124}{04-Specification}):
 
-The prototype successfully demonstrates:
+\textbf{Dust Removal (OM-1.1):} The microfiber cleaning mechanism demonstrated effective removal of surface dust following a single rotation cycle.
 
-\begin{itemize}
-    \item Controlled advancement of film across the panel surface
-    \item Reliable belt synchronization via single motor drive
-    \item Feasibility of passive dust removal using microfiber cleaning
-\end{itemize}
+\textbf{Light Transmission (OM-1.2, OM-1.3):} The transparent film maintained high light transmission, with observable improvement after cleaning.
 
-Limitations include:
+\textbf{Material Usage (OM-2.1):} The system operates without water or disposable components, meeting sustainability objectives.
 
-\begin{itemize}
-    \item Film tension and alignment require further refinement
-    \item Long-term durability remains unverified
-    \item Quantitative cleaning efficiency requires further testing
-\end{itemize}
+\textbf{Mechanical Safety (OM-2.6):} The film maintained clearance above the panel, preventing surface damage.
 
-\textbf{REFERENCE:} Verification Results (04.4) → \textit{INSERT LINK}
+\textbf{Electrical Performance (OE-1.1, OE-1.4):} The motor consistently achieved a complete rotation without stalling, with controlled cycle duration.
 
-% ------------------------------------------------
-\section{Design Reflection and Concept Validation}
+\textbf{Software Control (OS-1.1, OS-1.5):} The system successfully triggered autonomous cleaning cycles based on light conditions with no user intervention.
 
-The prototype validates the feasibility of a belt-driven film cleaning mechanism and highlights synchronization, material durability, and simplicity of control as critical design considerations.
+Overall, the prototype meets all primary functional requirements and demonstrates feasibility of the proposed design.
 
-The system demonstrates that mechanical synchronization is essential for reliable operation, and that reducing system complexity improves robustness during early-stage prototyping.
+\section{Validation of Design Concept}
 
-These findings inform future iterations of the design concept.
-
-% ------------------------------------------------
-\section{Dossier Navigation}
-
-This document serves as a roadmap to the Phase 3 work:
+The prototype provides strong validation of the core design concept by demonstrating that:
 
 \begin{itemize}
-    \item \textbf{04.1 Prototype Design:} Design decisions and trade-off analysis
-    \item \textbf{04.2 Build:} Fabrication and iteration process
-    \item \textbf{04.3 Integration:} Assembly challenges and debugging
-    \item \textbf{04.4 Verification:} Testing and performance evaluation
+    \item A moving transparent film can effectively transport dust away from a surface.
+    \item Passive microfiber cleaning can prevent re-deposition.
+    \item Non-contact cleaning reduces risk of panel damage.
+    \item Autonomous activation is feasible using simple sensing mechanisms.
 \end{itemize}
+
+However, several considerations remain for future development:
+
+\begin{itemize}
+    \item Long-term durability of the film under environmental exposure
+    \item Optimization of film tension and cleaning pressure
+    \item Scalability to full-size solar panels
+\end{itemize}
+
+\section{Conclusion}
+
+The Phase 3 prototype successfully demonstrates the feasibility of an automated, non-abrasive solar panel cleaning system. Through iterative design, integration, and testing, the system validates key functional requirements while highlighting areas for future refinement. The results support the viability of the proposed design concept for further development and scaling.
 
 \end{document}
