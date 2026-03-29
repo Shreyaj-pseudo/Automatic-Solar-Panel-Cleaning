@@ -41,7 +41,7 @@ SVG = """
   <text x="320" y="90" text-anchor="middle" font-family="monospace" font-size="10" fill="#7d8590">Signal &amp; mechanical data flow</text>
 
   <!-- ═══════════════════════════════
-       SS-01  MECHANICAL   y=108
+       SS-01  Structural   y=108
   ════════════════════════════════ -->
   <rect x="30" y="108" width="580" height="96" rx="12" fill="#1c2330" stroke="#30363d" stroke-width="1"/>
   <rect x="30" y="108" width="5"   height="96" rx="3"  fill="#10b981"/>
@@ -49,8 +49,8 @@ SVG = """
   <rect x="35" y="130" width="575" height="28"          fill="#1c2330"/>
   <rect x="46" y="116" width="36" height="32" rx="9" fill="#041a10"/>
   <text x="64" y="137" text-anchor="middle" font-size="18" fill="#e6edf3">&#x1F3A1;</text>
-  <text x="94" y="127" font-family="monospace" font-size="8" fill="#7d8590" letter-spacing="1.5">SUBSYSTEM 01 · MECHANICAL</text>
-  <text x="94" y="146" font-family="sans-serif" font-size="15" font-weight="900" fill="#10b981">Mechanical Subsystem</text>
+  <text x="94" y="127" font-family="monospace" font-size="8" fill="#7d8590" letter-spacing="1.5">SUBSYSTEM 01 · Structural</text>
+  <text x="94" y="146" font-family="sans-serif" font-size="15" font-weight="900" fill="#10b981">Structural Subsystem</text>
   <rect x="486" y="120" width="102" height="20" rx="7" fill="#031208" stroke="#10b981" stroke-width="1"/>
   <text x="537" y="134" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="#10b981">TRANSMIT</text>
   <text x="46" y="164" font-family="monospace" font-size="9" fill="#7d8590">Film transport &amp; cleaning via synchronized belt motion</text>
@@ -243,7 +243,7 @@ SVG = """
   <rect x="30" y="792" width="580" height="22" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
   <text x="52" y="807" font-family="monospace" font-size="8" fill="#7d8590" letter-spacing="1.5">LEGEND</text>
   <line x1="116" y1="803" x2="140" y2="803" stroke="#10b981" stroke-width="2"/>
-  <text x="144" y="807" font-family="monospace" font-size="8" fill="#10b981">Mechanical</text>
+  <text x="144" y="807" font-family="monospace" font-size="8" fill="#10b981">Structural</text>
   <line x1="230" y1="803" x2="254" y2="803" stroke="#f0a500" stroke-width="2"/>
   <text x="258" y="807" font-family="monospace" font-size="8" fill="#f0a500">Electrical / Cleaning cloth</text>
   <line x1="400" y1="803" x2="424" y2="803" stroke="#a855f7" stroke-width="2"/>

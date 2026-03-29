@@ -458,14 +458,6 @@
           <div class="comp-detail">Above threshold → pulse STEP pin<br/>Below threshold → halt, disable driver</div>
         </div>
       </div>
-      <div class="comp">
-        <div class="comp-icon">🔵</div>
-        <div>
-          <div class="comp-name">Status LEDs</div>
-          <div class="comp-part">Red LED + Blue LED</div>
-          <div class="comp-detail">🔴 Red = standby / off<br/>🔵 Blue = belt running</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -673,7 +665,7 @@
     <div>
       <div class="domain-label">Domain 01</div>
       <div class="domain-title">Software Subsystems</div>
-      <div class="domain-desc">Input sensing, control firmware, threshold logic & status feedback</div>
+      <div class="domain-desc">Input sensing, control firmware, threshold logic</div>
     </div>
   </div>
 
@@ -730,34 +722,6 @@
       <div class="ov-why">
         <div class="ov-why-icon">💡</div>
         <p>The Pico W was chosen over a standard Arduino because its <strong>built-in ADC pins, faster clock, and WiFi capability</strong> give more headroom for future features without adding external modules. The STEP/DIR interface of the A4988 is also straightforward to drive from any GPIO, making the firmware simple and portable.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- LED STATUS -->
-  <div class="ov-card c-ctrl domain-child">
-    <div class="ov-card-header">
-      <div class="ov-num">SS-03b</div>
-      <div>
-        <div class="ov-card-title">🔵 Status Indicator LEDs</div>
-        <div class="ov-card-sub">🔵 Blue = belt running (daylight) &nbsp;·&nbsp; 🔴 Red = standby (low light)</div>
-      </div>
-    </div>
-    <div class="ov-body">
-      <div>
-        <div class="ov-section-label">Parts selected</div>
-        <div class="ov-parts">
-          <div class="ov-part"><span>—</span>Red LED — standby indicator</div>
-          <div class="ov-part"><span>—</span>Blue LED — active / running indicator</div>
-        </div>
-      </div>
-      <div class="ov-decision">
-        <div class="ov-section-label" style="margin-bottom:10px;">Decision rationale</div>
-        <p>Two LEDs provide clear, at-a-glance system status without requiring a serial monitor or display. The <strong>Blue LED</strong> is lit while the belt is actively running — confirming the LDR has detected sufficient light, the A4988 is being pulsed, and the film is advancing. The <strong>Red LED</strong> is lit during standby, indicating the system is powered but the light level is below threshold — the motor is halted and the driver disabled. Both are driven directly from Pico W GPIO output pins through current-limiting resistors.</p>
-      </div>
-      <div class="ov-why">
-        <div class="ov-why-icon">💡</div>
-        <p><strong>Red = standby, Blue = running</strong> mirrors the universally understood traffic light convention, making system state immediately readable to anyone observing the prototype without any prior knowledge of the circuit.</p>
       </div>
     </div>
   </div>
